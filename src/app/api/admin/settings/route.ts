@@ -7,6 +7,10 @@ const BOOLEAN_KEYS = new Set([
   "marketplaceActive", "vendorRegistrationActive",
   "allowPhysical", "allowDigital", "allowServices", "allowBundles", "allowCommunity",
   "aiEnabled", "notificationsEnabled", "emailsEnabled", "maintenanceMode",
+  "showTestimonials", "showFeatures", "showPricing", "showStats",
+  "showCategories", "showMarquee", "showResources",
+  "payStripe", "payFlutterwave", "payFedaPay", "payPaypal",
+  "payOrangeMoney", "payWave", "payMtnMoney",
 ]);
 
 const NUMBER_KEYS = new Set([

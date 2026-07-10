@@ -51,10 +51,7 @@ export function StoreLayoutWrapper({ children }: { children: React.ReactNode }) 
       <footer className="border-t border-gray-200 bg-white py-6 dark:border-gray-700 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 text-center text-sm text-gray-500 dark:text-gray-400">
           <p>
-            Propulsé par{" "}
-            <a href="/" className="font-semibold text-[#7126b6] hover:underline">
-              NOVA STORE
-            </a>
+            &copy; {new Date().getFullYear()} {shop?.name || "Boutique"}. Tous droits r&eacute;serv&eacute;s.
           </p>
         </div>
       </footer>

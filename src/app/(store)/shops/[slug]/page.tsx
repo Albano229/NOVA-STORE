@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { use, useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Store,
@@ -46,6 +47,9 @@ interface ShopData {
     comparePrice: number | null;
     isActive: boolean;
     requiresShippingAddress: boolean;
+    productType: string;
+    ctaText: string | null;
+    ctaColor: string | null;
     images: { id: string; url: string; alt: string | null }[];
   }[];
   reviews: {
@@ -68,6 +72,7 @@ export default function ShopPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
+  const router = useRouter();
   const { data: session } = useSession();
   const addItem = useCartStore((s) => s.addItem);
 
@@ -143,6 +148,22 @@ export default function ShopPage({
       requiresShippingAddress: product.requiresShippingAddress !== false,
     });
     toast.success("Ajouté au panier !");
+  };
+
+  const handleBuyNow = (product: ShopData["products"][0]) => {
+    if (!shop) return;
+    addItem({
+      id: product.id,
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0]?.url || "",
+      shopId: shop.id,
+      shopName: shop.name,
+      stock: 999999,
+      requiresShippingAddress: product.requiresShippingAddress !== false,
+    });
+    router.push("/checkout");
   };
 
   const promoProducts = (Array.isArray(shop?.products) ? shop.products : []).filter((p) => p.comparePrice && p.comparePrice > p.price);
@@ -341,13 +362,23 @@ export default function ShopPage({
                               </span>
                             )}
                           </div>
-                          <button
-                            onClick={() => addToCart(product)}
-                            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1e293b] transition-colors"
-                          >
-                            <ShoppingCart className="h-3.5 w-3.5" />
-                            Ajouter au panier
-                          </button>
+                          {product.productType === "PHYSICAL" ? (
+                            <button
+                              onClick={() => addToCart(product)}
+                              className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1e293b] transition-colors"
+                            >
+                              <ShoppingCart className="h-3.5 w-3.5" />
+                              Ajouter au panier
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleBuyNow(product)}
+                              className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-white transition-colors"
+                              style={{ backgroundColor: product.ctaColor || "#7126b6" }}
+                            >
+                              {product.ctaText || "Acheter maintenant"}
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -437,13 +468,23 @@ export default function ShopPage({
                             </span>
                           )}
                         </div>
-                        <button
-                          onClick={() => addToCart(product)}
-                          className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1e293b] transition-colors"
-                        >
-                          <ShoppingCart className="h-3.5 w-3.5" />
-                          Ajouter au panier
-                        </button>
+                        {product.productType === "PHYSICAL" ? (
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1e293b] transition-colors"
+                          >
+                            <ShoppingCart className="h-3.5 w-3.5" />
+                            Ajouter au panier
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleBuyNow(product)}
+                            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-white transition-colors"
+                            style={{ backgroundColor: product.ctaColor || "#7126b6" }}
+                          >
+                            {product.ctaText || "Acheter maintenant"}
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))}

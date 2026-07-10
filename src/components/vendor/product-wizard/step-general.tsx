@@ -1,20 +1,12 @@
 "use client"
 
 import { WizardData } from "@/types/product"
+import { CATEGORIES } from "@/types/product"
 import { useState, useEffect, useMemo } from "react"
 import dynamic from "next/dynamic"
 import AssistantIA from "@/components/ui/assistant-ia"
 
 const QuillEditor = dynamic(() => import("@/components/ui/quill-editor"), { ssr: false })
-
-interface DbCategory {
-  id: string
-  name: string
-  slug: string
-  productType: string | null
-  parentId: string | null
-  subcategories?: { id: string; name: string; slug: string }[]
-}
 
 interface StepGeneralProps {
   data: WizardData
@@ -22,30 +14,21 @@ interface StepGeneralProps {
 }
 
 export default function StepGeneral({ data, onChange }: StepGeneralProps) {
-  const [dbCategories, setDbCategories] = useState<DbCategory[]>([])
+  const [prevProductType, setPrevProductType] = useState(data.productType)
 
   useEffect(() => {
-    fetch("/api/categories")
-      .then((r) => r.json())
-      .then((cats) => {
-        if (Array.isArray(cats)) setDbCategories(cats)
-      })
-      .catch(() => {})
-  }, [])
+    if (prevProductType !== data.productType) {
+      setPrevProductType(data.productType)
+      if (prevProductType !== null) {
+        onChange({ categoryId: "", subcategoryId: "" })
+      }
+    }
+  }, [data.productType, prevProductType, onChange])
 
   const categories = useMemo(() => {
-    if (!data.productType) return dbCategories
-    const typeMap: Record<string, string> = {
-      PHYSICAL: "PHYSICAL",
-      DIGITAL: "DIGITAL",
-      SERVICE: "SERVICE",
-    }
-    const filterType = typeMap[data.productType]
-    if (!filterType) return dbCategories
-    return dbCategories.filter(
-      (c) => !c.productType || c.productType === filterType
-    )
-  }, [data.productType, dbCategories])
+    if (!data.productType) return []
+    return CATEGORIES[data.productType] || []
+  }, [data.productType])
 
   const subcategories = useMemo(() => {
     if (!data.categoryId) return []

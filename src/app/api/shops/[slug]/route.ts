@@ -31,6 +31,7 @@ export async function GET(
     const productsResult = await pool.query(
       `SELECT
         p.id, p.name, p.slug, p.price, p."comparePrice", p."isActive", p."requiresShippingAddress",
+        p."productType", p."ctaText", p."ctaColor",
         COALESCE(
           (SELECT json_agg(json_build_object('id', pi.id, 'url', pi.url, 'alt', pi.alt) ORDER BY pi."position" ASC)
            FROM "ProductImage" pi WHERE pi."productId" = p.id LIMIT 1),
