@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="fav-grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="32" height="32" rx="7" fill="url(#fav-grad)"/>
+  <!-- Left bar -->
+  <rect x="7" y="8" width="3.5" height="16" rx="1.75" fill="white"/>
+  <!-- Right bar -->
+  <rect x="21.5" y="8" width="3.5" height="16" rx="1.75" fill="white"/>
+  <!-- Diagonal -->
+  <path d="M10.5 24L21.5 8" stroke="white" stroke-width="3.2" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <defs>
+    <linearGradient id="nova-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon mark -->
+  <rect x="2" y="4" width="40" height="40" rx="10" fill="url(#nova-grad)"/>
+  <!-- Left vertical bar -->
+  <rect x="10" y="11" width="4.5" height="26" rx="2.25" fill="white"/>
+  <!-- Right vertical bar -->
+  <rect x="25.5" y="11" width="4.5" height="26" rx="2.25" fill="white"/>
+  <!-- Diagonal stroke with subtle arrow feel -->
+  <path d="M14.5 37L25.5 11" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <!-- Small arrow accent at top of diagonal -->
+  <path d="M22 14L25.5 11L22 8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- NOVA text -->
+  <text x="52" y="30" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#0F172A" letter-spacing="-0.5">NOVA</text>
+  <!-- STORE text -->
+  <text x="120" y="30" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="400" fill="#64748B" letter-spacing="-0.5">STORE</text>
+</svg>

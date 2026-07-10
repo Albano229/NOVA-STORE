@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="pwa-grad" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="108" fill="url(#pwa-grad)"/>
+  <!-- Left vertical bar -->
+  <rect x="120" y="130" width="56" height="252" rx="28" fill="white"/>
+  <!-- Right vertical bar -->
+  <rect x="336" y="130" width="56" height="252" rx="28" fill="white"/>
+  <!-- Diagonal stroke -->
+  <path d="M176 382L336 130" stroke="white" stroke-width="50" stroke-linecap="round"/>
+  <!-- Arrow accent -->
+  <path d="M302 158L336 130L302 102" stroke="white" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

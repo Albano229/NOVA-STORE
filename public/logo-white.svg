@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" fill="none">
+  <rect x="2" y="4" width="32" height="32" rx="8" fill="#818CF8"/>
+  <path d="M10 28V12l6 8 6-8v16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 12v16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="42" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF" letter-spacing="-0.5">NOVA</text>
+  <text x="105" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="400" fill="#CBD5E1" letter-spacing="-0.5">STORE</text>
+</svg>
