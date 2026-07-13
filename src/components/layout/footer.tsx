@@ -8,7 +8,7 @@ import { BRAND } from "@/lib/brand";
 export function Footer() {
   const { settings } = useSiteSettings();
   const siteName = settings.siteName || BRAND.name;
-  const siteDesc = settings.siteDescription || "La plateforme N°1 pour vendre vos produits au Bénin.";
+  const siteDesc = settings.siteDescription || "La plateforme N°1 pour vendre vos produits en Afrique et dans le monde.";
 
   return (
     <footer className="bg-slate-900 text-gray-300">
@@ -28,13 +28,20 @@ export function Footer() {
               {siteDesc}
             </p>
             <div className="mt-6 flex items-center gap-3">
-              {["Facebook", "Instagram", "LinkedIn", "X"].map((name) => (
+              {[
+                { name: "Facebook", url: "https://facebook.com/novastore" },
+                { name: "Instagram", url: "https://instagram.com/novastore" },
+                { name: "TikTok", url: "https://tiktok.com/@novastore" },
+                { name: "X", url: "https://x.com/novastore" },
+              ].map((s) => (
                 <a
-                  key={name}
-                  href="#"
+                  key={s.name}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-gray-400 transition-colors hover:bg-white/20 hover:text-white"
                 >
-                  {name.charAt(0)}
+                  {s.name.charAt(0)}
                 </a>
               ))}
             </div>
@@ -51,35 +58,31 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Ressources */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Ressources</h3>
             <ul className="mt-4 space-y-3">
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Centre d&apos;aide</Link></li>
+              <li><Link href="/#features" className="text-sm text-gray-400 transition-colors hover:text-white">Fonctionnalités</Link></li>
               <li><Link href="/#pricing" className="text-sm text-gray-400 transition-colors hover:text-white">Tarifs</Link></li>
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Guides</Link></li>
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Blog</Link></li>
+              <li><Link href="/products" className="text-sm text-gray-400 transition-colors hover:text-white">Boutique</Link></li>
+              <li><Link href="/auth/register" className="text-sm text-gray-400 transition-colors hover:text-white">Créer ma boutique</Link></li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Légal */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Légal</h3>
             <ul className="mt-4 space-y-3">
               <li><Link href="/privacy" className="text-sm text-gray-400 transition-colors hover:text-white">Politique de confidentialité</Link></li>
               <li><Link href="/terms" className="text-sm text-gray-400 transition-colors hover:text-white">Termes et conditions</Link></li>
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Sécurité</Link></li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Contact */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Entreprise</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
             <ul className="mt-4 space-y-3">
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">À propos</Link></li>
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Équipe</Link></li>
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Carrières</Link></li>
-              <li><Link href="#" className="text-sm text-gray-400 transition-colors hover:text-white">Contact</Link></li>
+              <li><span className="text-sm text-gray-400">support@nova-store.com</span></li>
             </ul>
           </div>
         </div>

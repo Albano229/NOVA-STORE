@@ -275,7 +275,7 @@ export default function HomePage() {
   const siteName = settings.siteName || BRAND.name;
   const { recentlyViewed, clearRecent } = useRecentlyViewed();
 
-  const heroTitle = settings.heroTitle || "La plateforme N°1 pour vendre vos produits au Bénin.";
+  const heroTitle = settings.heroTitle || "La plateforme N°1 pour vendre vos produits en Afrique et dans le monde.";
   const heroSubtitle = settings.heroSubtitle || `Créez une boutique en 5 minutes, vendez vos produits partout dans le monde et recevez vos revenus rapidement grâce à ${siteName}.`;
   const heroCta = settings.heroCtaText || "Créer ma boutique gratuitement";
 
@@ -300,7 +300,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <span className="text-sm font-medium text-gray-600">Des milliers de vendeurs au Bénin</span>
+            <span className="text-sm font-medium text-gray-500">Des milliers de vendeurs en Afrique</span>
           </div>
 
           {/* Title */}
@@ -569,6 +569,92 @@ export default function HomePage() {
         </div>
       </section>
       </>)}
+
+      {/* ═══════════════ PRICING / COMMISSION ═══════════════ */}
+      {showSection("showPricing") && (
+      <section id="pricing" className="border-t border-gray-100 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-3xl font-extrabold tracking-tight text-gray-900">
+            Une commission unique de 5%
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-gray-500">
+            Pas d&apos;abonnement, pas de frais cachés. Vous ne payez que lorsque vous vendez.
+          </p>
+
+          <div className="mt-12 grid gap-8 lg:grid-cols-3">
+            {/* Carte Gratuite */}
+            <div className="relative flex flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900">Démarrage</h3>
+              <p className="mt-2 text-4xl font-bold text-gray-900">Gratuit</p>
+              <p className="mt-1 text-sm text-gray-500">0 FCFA / mois</p>
+              <ul className="mt-6 flex-1 space-y-3">
+                {["Boutique en ligne", "Produits illimités", "Paiements intégrés", "Support standard"].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/auth/register"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-50"
+              >
+                Commencer gratuitement
+              </Link>
+            </div>
+
+            {/* Carte Recommandée - Commission 5% */}
+            <div className="relative flex flex-col rounded-2xl border-2 border-indigo-500 bg-white p-8 shadow-lg shadow-indigo-500/10">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-600 px-4 py-1 text-xs font-semibold text-white">
+                Le plus populaire
+              </span>
+              <h3 className="text-lg font-semibold text-gray-900">Commission</h3>
+              <p className="mt-2 text-4xl font-bold text-indigo-600">5%</p>
+              <p className="mt-1 text-sm text-gray-500">par transaction</p>
+              <ul className="mt-6 flex-1 space-y-3">
+                {["Pas d'abonnement mensuel", "Paiement à la vente uniquement", "Tous les moyens de paiement", "Support prioritaire", "Statistiques avancées", "Export des données"].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/auth/register"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-indigo-700"
+              >
+                Créer ma boutique
+              </Link>
+            </div>
+
+            {/* Carte Premium */}
+            <div className="relative flex flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900">Premium</h3>
+              <p className="mt-2 text-4xl font-bold text-gray-900">3%</p>
+              <p className="mt-1 text-sm text-gray-500">pour les gros volumes</p>
+              <ul className="mt-6 flex-1 space-y-3">
+                {["Tout de la formule Commission", "Commission réduite à 3%", "API dédiée", "Gestionnaire de compte", "Intégrations sur mesure", "Formation prioritaire"].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contact"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-50"
+              >
+                Nous contacter
+              </Link>
+            </div>
+          </div>
+
+          <p className="mt-10 text-center text-sm text-gray-400">
+            Tous les prix sont en FCFA. Commission prélevée automatiquement sur chaque transaction réussie.
+          </p>
+        </div>
+      </section>
+      )}
 
       {/* ═══════════════ MARQUEE ═══════════════ */}
       {showSection("showMarquee") && (
