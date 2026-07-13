@@ -38,6 +38,16 @@ import {
   Film,
   Laptop,
   Check,
+  Monitor,
+  Settings,
+  Star,
+  Award,
+  Clock,
+  Image,
+  MessageCircle,
+  GraduationCap,
+  Calendar,
+  Target,
 } from "lucide-react";
 import { useSiteSettings } from "@/contexts/site-settings-context";
 import { BRAND } from "@/lib/brand";
@@ -52,32 +62,57 @@ const productTabs = [
   {
     id: "physical",
     label: "Produits Physiques",
-    desc: "Vendez des vêtements, électronique, accessoires et tout produit tangible directement depuis votre boutique.",
+    icon: Package,
+    shortDesc: "Vendez des produits tangibles et gérez votre stock facilement.",
+    desc: "Vendez des vêtements, électronique, accessoires et tout produit tangible directement depuis votre boutique. Gérez votre inventaire, suivez vos expéditions et offrez une expérience d'achat professionnelle à vos clients.",
     gradient: "from-indigo-500 to-purple-600",
+    features: ["Gestion de stock en temps réel", "Intégration transporteurs", "Suivi des expéditions", "Étiquettes d'expédition"],
+    examples: ["Vêtements", "Électronique", "Alimentation", "Maison", "Accessoires"],
+    mockup: "📦",
   },
   {
     id: "digital",
     label: "Produits Digitaux",
-    desc: "Ebooks, templates, musique, photos et tout fichier numérique. Livraison instantanée après paiement.",
+    icon: Download,
+    shortDesc: "Vendez des fichiers numériques téléchargeables instantanément.",
+    desc: "Ebooks, templates, musique, logiciels, photos et tout fichier numérique. Livraison instantanée après paiement, aucun stock à gérer, zéro frais d'expédition, marge bénéficiaire maximale.",
     gradient: "from-emerald-500 to-teal-600",
+    features: ["Livraison automatique", "Protection anti-piratage", "Téléchargements illimités", "Stockage cloud sécurisé"],
+    examples: ["Ebooks", "Formations vidéo", "Logiciels", "Musiques", "Templates"],
+    mockup: "💻",
   },
   {
     id: "services",
     label: "Services",
-    desc: "Proposez vos prestations : consulting, design, développement, coaching et bien plus.",
+    icon: Briefcase,
+    shortDesc: "Proposez vos prestations et trouvez des clients facilement.",
+    desc: "Proposez vos compétences : consulting, design, développement, rédaction, montage vidéo et bien plus. Recevez des demandes de clients, gérez vos projets et facturez directement depuis votre tableau de bord.",
     gradient: "from-amber-500 to-orange-600",
+    features: ["Système de réservation", "Facturation intégrée", "Messagerie client", "Gestion des projets"],
+    examples: ["Coaching", "Consulting", "Design", "Montage vidéo", "Développement"],
+    mockup: "🤝",
   },
   {
     id: "formations",
     label: "Formations",
-    desc: "Créez et vendez vos formations en ligne avec vidéos, quiz et certificats intégrés.",
+    icon: GraduationCap,
+    shortDesc: "Créez et vendez vos formations en ligne avec des outils complets.",
+    desc: "Créez des cours en ligne complets avec vidéos, quiz, exercices et certificats. Un système LMS (Learning Management System) intégré pour gérer vos élèves, suivre leur progression et délivrer des attestations.",
     gradient: "from-rose-500 to-pink-600",
+    features: ["Éditeur de cours vidéo", "Quiz et exercices", "Certificats automatiques", "Suivi des apprenants"],
+    examples: ["Cours en ligne", "Formations pro", "Tutoriels vidéo", "Masterclass", "Bootcamps"],
+    mockup: "🎓",
   },
   {
     id: "coaching",
     label: "Coaching",
-    desc: "Accompagnez vos clients en séances individuelles ou en groupe grâce à notre système de réservation.",
+    icon: Target,
+    shortDesc: "Accompagnez vos clients en séances individuelles ou en groupe.",
+    desc: "Créez vos programmes de coaching, gérez vos rendez-vous, suivez vos clients et développez votre activité de coach. Idéal pour le coaching professionnel, sportif, bien-être ou spirituel.",
     gradient: "from-cyan-500 to-blue-600",
+    features: ["Calendrier de réservation", "Séances en visio", "Suivi des progrès", "Paiement par séance ou forfait"],
+    examples: ["Coaching pro", "Coaching sportif", "Bien-être", "Développement", "Spirituel"],
+    mockup: "🎯",
   },
 ];
 
@@ -263,6 +298,34 @@ const sellCategories = [
       { icon: Code, label: "Développement" },
     ],
   },
+  {
+    type: "formations",
+    icon: GraduationCap,
+    title: "Formations",
+    desc: "Créez des cours en ligne avec vidéos, quiz, exercices et certificats. Un LMS complet pour gérer vos apprenants.",
+    gradient: "from-rose-500 to-rose-700",
+    examples: [
+      { icon: Video, label: "Cours en ligne" },
+      { icon: FileText, label: "Ebooks" },
+      { icon: Laptop, label: "Formations pro" },
+      { icon: Code, label: "Tutoriels" },
+      { icon: Award, label: "Certificats" },
+    ],
+  },
+  {
+    type: "coaching",
+    icon: Target,
+    title: "Coaching",
+    desc: "Proposez des séances individuelles ou en groupe. Gérez vos rendez-vous et suivez les progrès de vos clients.",
+    gradient: "from-cyan-500 to-cyan-700",
+    examples: [
+      { icon: Users, label: "Coaching pro" },
+      { icon: Star, label: "Bien-être" },
+      { icon: Calendar, label: "Séances" },
+      { icon: MessageCircle, label: "Suivi" },
+      { icon: Clock, label: "Forfaits" },
+    ],
+  },
 ];
 
 /* ────────────────────────────────────────────
@@ -324,41 +387,108 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Tabs */}
-          <div className="mx-auto mt-16 max-w-4xl">
+          {/* Tabs - Types de produits */}
+          <div className="mx-auto mt-16 max-w-6xl">
+            {/* Boutons des onglets */}
             <div className="flex flex-wrap items-center justify-center gap-2">
               {productTabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all ${
+                  className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all ${
                     activeTab === tab.id
                       ? "bg-indigo-600 text-white shadow-md"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}
                 >
+                  <tab.icon className="h-4 w-4" />
                   {tab.label}
                 </button>
               ))}
             </div>
-            <div className="mt-8 grid items-center gap-8 md:grid-cols-2">
-              {productTabs
-                .filter((tab) => tab.id === activeTab)
-                .map((tab) => (
-                  <div key={tab.id}>
-                    <p className="text-lg text-gray-600">{tab.desc}</p>
+
+            {/* Contenu de l'onglet actif */}
+            {productTabs
+              .filter((tab) => tab.id === activeTab)
+              .map((tab) => (
+                <div key={tab.id} className="mt-10">
+                  <div className="grid items-center gap-10 lg:grid-cols-5">
+                    {/* Texte explicatif */}
+                    <div className="lg:col-span-3">
+                      <h3 className="text-2xl font-bold text-gray-900">
+                        {tab.label}
+                      </h3>
+                      <p className="mt-3 text-base leading-relaxed text-gray-500">
+                        {tab.desc}
+                      </p>
+
+                      {/* Caractéristiques */}
+                      <div className="mt-6 grid grid-cols-2 gap-3">
+                        {tab.features.map((f) => (
+                          <div key={f} className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className={`h-2 w-2 rounded-full bg-gradient-to-r ${tab.gradient}`} />
+                            {f}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Exemples */}
+                      <div className="mt-6">
+                        <p className="text-sm font-medium text-gray-700">Exemples :</p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {tab.examples.map((ex) => (
+                            <span
+                              key={ex}
+                              className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-600"
+                            >
+                              {ex}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <Link
+                        href="/auth/register"
+                        className={`mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${tab.gradient} px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg`}
+                      >
+                        Vendre des {tab.label.toLowerCase()}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+
+                    {/* Mockup / Visuel */}
+                    <div className="lg:col-span-2">
+                      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${tab.gradient} p-1 shadow-lg`}>
+                        <div className="rounded-xl bg-white p-6">
+                          {/* Barre type fenêtre */}
+                          <div className="mb-4 flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-red-400" />
+                            <div className="h-3 w-3 rounded-full bg-yellow-400" />
+                            <div className="h-3 w-3 rounded-full bg-green-400" />
+                            <span className="ml-2 text-xs text-gray-400">aperçu {tab.label.toLowerCase()}</span>
+                          </div>
+                          {/* Contenu du mockup */}
+                          <div className="flex flex-col items-center py-6 text-center">
+                            <div className={`flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${tab.gradient} text-3xl shadow-inner`}>
+                              <tab.icon className="h-10 w-10 text-white" />
+                            </div>
+                            <h4 className="mt-4 text-lg font-bold text-gray-900">{tab.label}</h4>
+                            <p className="mt-1 text-sm text-gray-500">{tab.shortDesc}</p>
+                            <div className="mt-4 grid w-full grid-cols-2 gap-2">
+                              {tab.features.slice(0, 4).map((f) => (
+                                <div key={f} className="flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600">
+                                  <Check className="h-3 w-3 text-indigo-500" />
+                                  {f}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                ))}
-              <div className="hidden md:block">
-                <div
-                  className={`flex h-56 items-center justify-center rounded-2xl bg-gradient-to-br ${
-                    productTabs.find((t) => t.id === activeTab)?.gradient
-                  } text-white`}
-                >
-                  <Store className="h-20 w-20 opacity-50" />
                 </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
       </section>
@@ -436,13 +566,13 @@ export default function HomePage() {
               <span className="text-indigo-600">{siteName}</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
-              Produits physiques, produits digitaux et services — une seule plateforme pour développer
+              Produits physiques, digitaux, services, formations et coaching — une seule plateforme pour développer
               votre business.
             </p>
           </div>
 
-          {/* 3 Cards */}
-          <div className="mt-14 grid gap-8 lg:grid-cols-3">
+          {/* 5 Cards */}
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {sellCategories.map((cat) => (
               <div
                 key={cat.type}
