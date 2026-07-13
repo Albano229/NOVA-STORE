@@ -641,7 +641,7 @@ export default function HomePage() {
                 ))}
               </ul>
               <Link
-                href="/contact"
+                href="mailto:novadigital184@gmail.com"
                 className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-50"
               >
                 Nous contacter

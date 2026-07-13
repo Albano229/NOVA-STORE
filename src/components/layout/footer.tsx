@@ -27,23 +27,13 @@ export function Footer() {
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-gray-400">
               {siteDesc}
             </p>
-            <div className="mt-6 flex items-center gap-3">
-              {[
-                { name: "Facebook", url: "https://facebook.com/novastore" },
-                { name: "Instagram", url: "https://instagram.com/novastore" },
-                { name: "TikTok", url: "https://tiktok.com/@novastore" },
-                { name: "X", url: "https://x.com/novastore" },
-              ].map((s) => (
-                <a
-                  key={s.name}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-gray-400 transition-colors hover:bg-white/20 hover:text-white"
-                >
-                  {s.name.charAt(0)}
-                </a>
-              ))}
+            <div className="mt-6">
+              <a
+                href="mailto:novadigital184@gmail.com"
+                className="text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                📧 novadigital184@gmail.com
+              </a>
             </div>
           </div>
 
@@ -82,7 +72,7 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
             <ul className="mt-4 space-y-3">
-              <li><span className="text-sm text-gray-400">support@nova-store.com</span></li>
+              <li><a href="mailto:novadigital184@gmail.com" className="text-sm text-gray-400 transition-colors hover:text-white">novadigital184@gmail.com</a></li>
             </ul>
           </div>
         </div>
