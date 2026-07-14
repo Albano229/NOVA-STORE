@@ -23,7 +23,7 @@ const TYPE_LABELS: Record<string, string> = {
   SERVICE: "Service",
   COMMUNITY: "Communauté",
   BUNDLE: "Pack / Bundle",
-  RESERVATION: "Réservation / Événement",
+  BOOKING: "Réservation / Événement",
 }
 
 function Section({ icon: Icon, title, children }: { icon: any; title: string; children: React.ReactNode }) {
@@ -148,7 +148,7 @@ export default function StepReview({ data }: Props) {
                 <Field label="Durée d'accès" value={data.accessDuration} />
               </>
             )}
-            {data.productType === "SERVICE" && (
+            {data.productType === "BOOKING" && (
               <>
                 <Field label="Durée" value={data.duration} />
                 <Field label="Mode" value={data.locationType === "online" ? "En ligne" : data.locationType === "offline" ? "Présentiel" : "Les deux"} />
@@ -167,7 +167,7 @@ export default function StepReview({ data }: Props) {
                 <Field label="Éléments" value={data.bundleItems.length} />
               </>
             )}
-            {data.productType === "RESERVATION" && (
+            {data.productType === "BOOKING" && (
               <>
                 <Field label="Date" value={data.eventDate} />
                 <Field label="Heure" value={data.eventTime} />

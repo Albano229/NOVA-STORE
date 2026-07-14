@@ -60,7 +60,7 @@ export default function StepPreview({ data, onStepClick }: StepPreviewProps) {
     })
   }
 
-  if (data.productType === "SERVICE") {
+  if (data.productType === "BOOKING") {
     sections.push({
       step: "requirements", label: "Exigences", fields: [
         { label: "Délai", value: data.deliveryDelay || "—" },
@@ -90,7 +90,7 @@ export default function StepPreview({ data, onStepClick }: StepPreviewProps) {
     })
   }
 
-  if (data.productType === "RESERVATION") {
+  if (data.productType === "BOOKING") {
     sections.push({
       step: "planning-venue", label: "Planning", fields: [
         { label: "Date début", value: data.eventDate ? `${data.eventDate} ${data.eventTime}` : "—" },

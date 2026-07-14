@@ -17,7 +17,7 @@ export default function StepPostPurchase({ data, onChange, productType }: StepPo
     ? "Expérience Post-Achat & Instructions"
     : productType === "COMMUNITY"
       ? "Instructions d'Intégration"
-      : productType === "RESERVATION"
+      : productType === "BOOKING"
         ? "Instructions d'Accès Post-Achat"
         : "Instructions Post-Achat"
 
@@ -66,7 +66,7 @@ export default function StepPostPurchase({ data, onChange, productType }: StepPo
             ? "Instructions secrètes après achat"
             : productType === "COMMUNITY"
               ? "Message secret & Instructions d'intégration"
-              : productType === "RESERVATION"
+              : productType === "BOOKING"
                 ? "Instructions d'accès (lien Zoom, code d'accès, ticket PDF)"
                 : "Instructions post-achat"}
         </label>
@@ -75,7 +75,7 @@ export default function StepPostPurchase({ data, onChange, productType }: StepPo
             ? "Écrivez les consignes qui s'afficheront sur l'écran de remerciement et dans l'email de confirmation."
             : productType === "COMMUNITY"
               ? "Liens d'invitation uniques vers le canal privé WhatsApp, Telegram ou Discord."
-              : productType === "RESERVATION"
+              : productType === "BOOKING"
                 ? "Code d'accès, lien de réunion en ligne ou ticket PDF délivré après paiement."
                 : "Instructions affichées uniquement après le paiement validé."}
         </p>
@@ -88,7 +88,7 @@ export default function StepPostPurchase({ data, onChange, productType }: StepPo
         </div>
       </div>
 
-      {productType === "SERVICE" && (
+      {productType === "BOOKING" && (
         <div className="space-y-4">
           <div className="rounded-xl border border-gray-200 p-5">
             <h4 className="text-sm font-medium text-[#0f172a]">Questionnaire obligatoire post-achat</h4>

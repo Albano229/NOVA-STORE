@@ -8,6 +8,7 @@ import {
   Gift,
   Users,
   Calendar,
+  Wrench,
   Check,
   ArrowRight,
   Star,
@@ -31,7 +32,7 @@ const typesConfig: Record<string, {
   benefits: string[];
   howItWorks: { step: string; title: string; desc: string }[];
 }> = {
-  physical: {
+  physique: {
     id: "physical",
     label: "Produits Physiques",
     icon: Package,
@@ -90,14 +91,36 @@ const typesConfig: Record<string, {
       { icon: Zap, title: "Promotions flash", desc: "Créez des offres limitées dans le temps" },
       { icon: Shield, title: "Gestion centralisée", desc: "Stock et commandes gérés automatiquement" },
     ],
-    benefits: ["Panier moyen plus élevé", "Fidélisation client", "Écoul ez vos stocks", "Offres uniques"],
+    benefits: ["Panier moyen plus élevé", "Fidélisation client", "Écoulez vos stocks", "Offres uniques"],
     howItWorks: [
       { step: "1", title: "Sélectionnez vos produits", desc: "Choisissez 2 produits ou plus à assembler" },
       { step: "2", title: "Fixez le prix du pack", desc: "Proposez un prix attractif avec réduction" },
       { step: "3", title: "Vendez en volume", desc: "Les clients adorent les offres groupées" },
     ],
   },
-  community: {
+  service: {
+    id: "service",
+    label: "Services",
+    icon: Wrench,
+    gradient: "from-emerald-500 to-emerald-600",
+    bgLight: "bg-emerald-50",
+    emoji: "🔧",
+    heroTitle: "Proposez vos services et prestations",
+    heroDesc: "Consultations, coaching, développement, design, réparation — gérez votre planning, recevez des réservations et encaissez vos paiements en ligne.",
+    features: [
+      { icon: Calendar, title: "Calendrier intelligent", desc: "Gérez vos créneaux disponibles en temps réel" },
+      { icon: CreditCard, title: "Paiement à la réservation", desc: "Sécurisez vos rendez-vous avec un paiement" },
+      { icon: Headphones, title: "Questionnaire personnalisé", desc: "Collectez les infos nécessaires avant chaque prestation" },
+      { icon: Zap, title: "Rappels automatiques", desc: "SMS et email de rappel pour réduire les absences" },
+    ],
+    benefits: ["Zéro stock", "Paiement garanti", "Planning optimisé", "Disponible 24h/24"],
+    howItWorks: [
+      { step: "1", title: "Créez votre service", desc: "Définissez vos prestations, durée et tarifs" },
+      { step: "2", title: "Les clients réservent", desc: "Ils choisissent un créneau et paient en ligne" },
+      { step: "3", title: "Réalisez et gagnez", desc: "Effectuez la prestation et recevez votre paiement" },
+    ],
+  },
+  communaute: {
     id: "community",
     label: "Communauté",
     icon: Users,
@@ -119,7 +142,7 @@ const typesConfig: Record<string, {
       { step: "3", title: "Développez votre groupe", desc: "Partagez du contenu exclusif régulièrement" },
     ],
   },
-  booking: {
+  reservation: {
     id: "booking",
     label: "Réservation",
     icon: Calendar,

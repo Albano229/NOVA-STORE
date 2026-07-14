@@ -22,7 +22,7 @@ Ton: inspirant et exclusif. Crée le désir d'appartenir au groupe.`,
 Tu mets en avant le gain financier, la valeur cumulée, et l'offre groupée avantageuse.
 Format HTML propre avec <h2>, <h3>, <ul>, <li>, <strong>, <p>.
 Ton: commercial et orienté valeur. Calcule et affiche les économies.`,
-  RESERVATION: `Tu es un rédacteur e-commerce expert pour événements et réservations sur NOVA Store.
+  BOOKING: `Tu es un rédacteur e-commerce expert pour événements et réservations sur NOVA Store.
 Tu crées un programme/planning accrocheur, heure par heure, avec émotions et dynamisme.
 Format HTML propre avec <h2>, <h3>, <ul>, <li>, <strong>, <p>.
 Ton: dynamique et événementiel. Crée l'urgence et l'excitation.`,
@@ -163,7 +163,7 @@ function generateLocalDescription(name: string, type: string, category: string, 
 
 <p><strong>Achetez le pack maintenant</strong> et profitez d'une offre imbattable !</p>`,
 
-    RESERVATION: `<h2>${name}</h2>
+    BOOKING: `<h2>${name}</h2>
 
 <p>Ne manquez pas <strong>${name}</strong> — un événement incontournable qui promet de vous inspirer, connecter et propulser vers le succès. Réservez votre place avant qu'il ne soit trop tard !</p>
 
@@ -197,7 +197,7 @@ function generateLocalSeo(name: string, type: string): { seoTitle: string; seoDe
     SERVICE: "Service professionnel",
     COMMUNITY: "Rejoindre la communauté",
     BUNDLE: "Pack promotionnel",
-    RESERVATION: "Réserver votre place",
+    BOOKING: "Réserver votre place",
   };
   const label = typeLabels[type] || "Achat en ligne";
   let title = `${name} — ${label} | NOVA Store`;
@@ -210,7 +210,7 @@ function generateLocalSeo(name: string, type: string): { seoTitle: string; seoDe
     SERVICE: `${name} — Service professionnel de qualité. Réservez maintenant sur NOVA Store. Accompagnement expert garanti.`,
     COMMUNITY: `Rejoignez ${name} sur NOVA Store. Contenu exclusif, communauté privée, accès privilégié. Adhérez maintenant !`,
     BUNDLE: `${name} — Pack exclusif à prix réduit. Économisez sur l'achat groupé. Disponible sur NOVA Store.`,
-    RESERVATION: `${name} — Réservez votre place maintenant sur NOVA Store. Places limitées, ne tardez pas !`,
+    BOOKING: `${name} — Réservez votre place maintenant sur NOVA Store. Places limitées, ne tardez pas !`,
   };
 
   let desc = descriptions[type] || descriptions.PHYSICAL;
@@ -246,7 +246,7 @@ function generateLocalFaq(name: string, type: string): Array<{ question: string;
       { question: `Puis-je retourner un seul produit du pack ?`, answer: `Le pack est vendu ensemble. Pour un retour, contactez le support sous 30 jours avec justification.` },
       { question: `Quelle est l'économie réalisée avec ${name} ?`, answer: `Le pack offre une réduction de 20-40% par rapport à l'achat séparé de chaque produit. L'économie exacte est affichée sur la fiche.` },
     ],
-    RESERVATION: [
+    BOOKING: [
       { question: `Comment réserver pour ${name} ?`, answer: `Sélectionnez votre catégorie de billet, choisissez la date, et validez le paiement. Vous recevrez votre billet par email.` },
       { question: `Puis-je annuler ma réservation pour ${name} ?`, answer: `Annulation gratuite jusqu'à 7 jours avant l'événement. Au-delà, remboursement de 50%. Contactez le support.` },
       { question: `Y a-t-il un parking sur place pour ${name} ?`, answer: `Les informations pratiques (parking, accès, plan) seront envoyées par email 48h avant l'événement.` },
@@ -292,7 +292,7 @@ export async function POST(req: Request) {
         SERVICE: { ctaText: "Réserver", shortDesc: "Service professionnel de qualité" },
         COMMUNITY: { ctaText: "Rejoindre", shortDesc: "Communauté exclusive de passionnés" },
         BUNDLE: { ctaText: "Acheter le pack", shortDesc: "Pack complet à prix réduit" },
-        RESERVATION: { ctaText: "Réserver", shortDesc: "Places limitées — réservez maintenant !" },
+        BOOKING: { ctaText: "Réserver", shortDesc: "Places limitées — réservez maintenant !" },
       };
       const defaults = typeDefaults[type] || typeDefaults.PHYSICAL;
 

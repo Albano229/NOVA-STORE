@@ -25,6 +25,7 @@ import {
   Package,
   Download,
   Briefcase,
+  Wrench,
   Shirt,
   Smartphone,
   Apple,
@@ -107,6 +108,17 @@ const productTabs = [
     features: ["Packs personnalisables", "Remises automatiques", "Stock groupé", "Promotions flash"],
     examples: ["Pack vêtements + ebook", "Formation + coaching", "Lot de produits", "Offre découverte"],
     mockup: "🎁",
+  },
+  {
+    id: "service",
+    label: "Services",
+    icon: Wrench,
+    shortDesc: "Proposez vos prestations : coaching, consulting, services à la personne.",
+    desc: "Consultations, coaching, développement, design, réparation — proposez vos services et recevez des réservations directement sur votre calendrier. Idéal pour les prestataires et artisans.",
+    gradient: "from-emerald-500 to-emerald-600",
+    features: ["Calendrier intelligent", "Paiement à la réservation", "Rappels automatiques", "Questionnaire personnalisé"],
+    examples: ["Coaching", "Consulting", "Développement", "Design", "Réparation"],
+    mockup: "🔧",
   },
   {
     id: "community",
@@ -315,6 +327,20 @@ const sellCategories = [
     ],
   },
   {
+    type: "service",
+    icon: Wrench,
+    title: "Services",
+    desc: "Proposez vos prestations : coaching, consulting, réparation, développement, services à la personne. Réservation en ligne et paiement sécurisé.",
+    gradient: "from-emerald-500 to-emerald-700",
+    examples: [
+      { icon: Briefcase, label: "Consulting" },
+      { icon: Code, label: "Développement" },
+      { icon: Paintbrush, label: "Design" },
+      { icon: Headphones, label: "Support" },
+      { icon: Heart, label: "Bien-être" },
+    ],
+  },
+  {
     type: "community",
     icon: Users,
     title: "Communauté",
@@ -475,7 +501,7 @@ export default function HomePage() {
                       </div>
 
                       <Link
-                        href={`/produits/${tab.id === "physical" ? "physique" : tab.id === "digital" ? "digital" : tab.id === "bundle" ? "bundle" : tab.id === "community" ? "communaute" : "reservation"}`}
+                        href={`/produits/${tab.id === "physical" ? "physique" : tab.id === "digital" ? "digital" : tab.id === "bundle" ? "bundle" : tab.id === "service" ? "service" : tab.id === "community" ? "communaute" : "reservation"}`}
                         className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${tab.gradient} px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg`}
                       >
                         En savoir plus

@@ -47,7 +47,7 @@ export default function StepMediaBanner({ data, onChange, productType }: StepMed
 
   const isCommunity = productType === "COMMUNITY"
   const isBundle = productType === "BUNDLE"
-  const isReservation = productType === "RESERVATION"
+  const isReservation = productType === "BOOKING"
   const title = isCommunity
     ? "Design de l'Espace"
     : isBundle

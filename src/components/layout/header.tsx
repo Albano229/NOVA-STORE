@@ -75,6 +75,10 @@ export function Header() {
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 text-xs">🎁</span>
                   Bundles
                 </Link>
+                <Link href="/produits/service" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-xs">🔧</span>
+                  Services
+                </Link>
                 <Link href="/produits/communaute" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-100 text-xs">👥</span>
                   Communauté
@@ -175,6 +179,9 @@ export function Header() {
               </Link>
               <Link href="/produits/bundle" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 🎁 Bundles
+              </Link>
+              <Link href="/produits/service" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                🔧 Services
               </Link>
               <Link href="/produits/communaute" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 👥 Communauté

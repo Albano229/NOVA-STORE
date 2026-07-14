@@ -56,7 +56,7 @@ export default function StepGeneral({ data, onChange }: StepGeneralProps) {
     data.productType === "SERVICE" ? "Présentation du Service" :
     data.productType === "COMMUNITY" ? "Description de la Communauté" :
     data.productType === "BUNDLE" ? "Composition du Pack" :
-    data.productType === "RESERVATION" ? "Programme de l'Événement" :
+    data.productType === "BOOKING" ? "Programme de l'Événement" :
     "Informations Générales"
 
   return (
@@ -70,10 +70,9 @@ export default function StepGeneral({ data, onChange }: StepGeneralProps) {
 
       <div className="space-y-2">
         <label className="block text-sm font-medium text-[#0f172a]">
-          {data.productType === "SERVICE" ? "Intitulé de la prestation" :
-           data.productType === "COMMUNITY" ? "Nom du club ou du groupe" :
+          {data.productType === "COMMUNITY" ? "Nom du club ou du groupe" :
            data.productType === "BUNDLE" ? "Nom du pack promotionnel" :
-           data.productType === "RESERVATION" ? "Titre de l'événement" :
+           data.productType === "BOOKING" ? "Titre de l'événement" :
            "Nom du produit"}
           <span className="text-red-500"> *</span>
         </label>
@@ -121,7 +120,7 @@ export default function StepGeneral({ data, onChange }: StepGeneralProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label className="block text-sm font-medium text-[#0f172a]">
-            Description {data.productType === "SERVICE" ? "du service" : data.productType === "COMMUNITY" ? "de la communauté" : "du produit"}
+            Description {data.productType === "COMMUNITY" ? "de la communauté" : "du produit"}
           </label>
           <AssistantIA
             contentType="description"

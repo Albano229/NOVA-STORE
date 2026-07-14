@@ -1,4 +1,4 @@
-export type ProductType = "PHYSICAL" | "DIGITAL" | "BUNDLE" | "COMMUNITY" | "BOOKING"
+export type ProductType = "PHYSICAL" | "DIGITAL" | "SERVICE" | "BUNDLE" | "COMMUNITY" | "BOOKING"
 
 export const PRODUCT_TYPES: Array<{
   type: ProductType
@@ -23,6 +23,14 @@ export const PRODUCT_TYPES: Array<{
     description: "Fichiers téléchargeables : e-books, templates, logiciels, photos...",
     color: "from-purple-500 to-purple-600",
     defaultCta: "Télécharger",
+  },
+  {
+    type: "SERVICE",
+    label: "Service & Prestation",
+    icon: "Wrench",
+    description: "Prestations, consultations, coaching, réparations, services à la personne...",
+    color: "from-emerald-500 to-emerald-600",
+    defaultCta: "Réserver",
   },
   {
     type: "COMMUNITY",
@@ -53,6 +61,7 @@ export const PRODUCT_TYPES: Array<{
 export const PRODUCT_TYPE_FIELDS: Record<ProductType, string[]> = {
   PHYSICAL: ["stock", "weight", "dimensions", "variants", "shipping", "preparationDelay", "sku", "warranty", "returnPolicy"],
   DIGITAL: ["fileUrl", "externalUrl", "maxDownloads", "version", "fileSize", "fileType", "accessDuration"],
+  SERVICE: ["duration", "availability", "locationType", "clientForm", "zone"],
   BUNDLE: ["bundleProducts", "bundleDiscount", "bundleItems"],
   COMMUNITY: ["isSubscription", "subscriptionPrice", "subscriptionInterval", "privateAccess", "accessType", "communityInfo"],
   BOOKING: ["eventDate", "eventTime", "eventDuration", "eventLocation", "maxSeats", "availability"],
@@ -180,18 +189,71 @@ export const CATEGORIES = {
         { id: "fonts", name: "Polices" },
         { id: "icons", name: "Icônes" },
         { id: "3d-models", name: "Modèles 3D" },
+    },
+  ],
+  SERVICE: [
+    {
+      id: "consulting",
+      name: "Conseil & Consulting",
+      icon: "Lightbulb",
+      subcategories: [
+        { id: "business-consulting", name: "Stratégie business" },
+        { id: "marketing", name: "Marketing" },
+        { id: "finance", name: "Finance" },
+      ],
+    },
+    {
+      id: "development",
+      name: "Développement",
+      icon: "Code",
+      subcategories: [
+        { id: "web-dev", name: "Développement web" },
+        { id: "mobile-dev", name: "Applications mobiles" },
+        { id: "automation", name: "Automatisation" },
+      ],
+    },
+    {
+      id: "creative",
+      name: "Créatif & Design",
+      icon: "Paintbrush",
+      subcategories: [
+        { id: "graphic-design", name: "Graphisme" },
+        { id: "ui-ux", name: "UI/UX Design" },
+        { id: "video-editing", name: "Montage vidéo" },
+        { id: "copywriting", name: "Rédaction" },
+      ],
+    },
+    {
+      id: "coaching",
+      name: "Coaching & Formation",
+      icon: "GraduationCap",
+      subcategories: [
+        { id: "life-coaching", name: "Coaching de vie" },
+        { id: "business-coaching", name: "Coaching business" },
+        { id: "training", name: "Formation professionnelle" },
+      ],
+    },
+    {
+      id: "support",
+      name: "Support & Maintenance",
+      icon: "Headphones",
+      subcategories: [
+        { id: "tech-support", name: "Support technique" },
+        { id: "maintenance", name: "Maintenance" },
+        { id: "installation", name: "Installation" },
       ],
     },
   ],
   COMMUNITY: [
     {
       id: "membership",
-      name: "Adhésion & Membership",
-      icon: "Crown",
+      name: "Adhésion & Membres",
+      icon: "Users",
       subcategories: [
-        { id: "premium", name: "Accès premium" },
-        { id: "vip", name: "VIP" },
-        { id: "exclusive", name: "Exclusif" },
+        { id: "premium", name: "Membres Premium" },
+        { id: "vip", name: "Club VIP" },
+        { id: "newsletter", name: "Newsletter payante" },
+        { id: "patreon", name: "Soutien / Patreon" },
       ],
     },
     {
@@ -575,6 +637,8 @@ export function getStepsForType(type: ProductType | null): string[] {
       return ["type", "general", "media-banner", "pricing-marketing", "logistics", "seo", "preview"]
     case "DIGITAL":
       return ["type", "general", "media-banner", "files-visuals", "pricing-marketing", "post-purchase", "seo", "preview"]
+    case "SERVICE":
+      return ["type", "general", "media-banner", "pricing-marketing", "requirements", "seo", "preview"]
     case "COMMUNITY":
       return ["type", "general", "media-banner", "pricing-marketing", "access-config", "seo", "preview"]
     case "BUNDLE":

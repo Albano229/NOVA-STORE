@@ -83,7 +83,7 @@ const PRODUCT_TYPE_LABELS: Record<string, { icon: typeof Store; label: string; c
   SERVICE: { icon: Calendar, label: "Service", color: "emerald" },
   COMMUNITY: { icon: Users, label: "Communauté", color: "orange" },
   BUNDLE: { icon: Tag, label: "Pack / Bundle", color: "pink" },
-  RESERVATION: { icon: Clock, label: "Réservation", color: "amber" },
+  BOOKING: { icon: Clock, label: "Réservation", color: "amber" },
 };
 
 export default function ProductDetailClient({ product }: { product: Product }) {
@@ -538,7 +538,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 Fichier : {product.digitalFile.fileName}
               </div>
             )}
-            {product.productType === "RESERVATION" && (
+            {product.productType === "BOOKING" && (
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="h-4 w-4 text-gray-400" />
                 Places limitées — {product.stock} restante{product.stock > 1 ? "s" : ""}
@@ -633,7 +633,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             )}
 
-            {product.productType === "SERVICE" && (
+            {product.productType === "BOOKING" && (
               <div className="rounded-xl bg-white p-4 border border-green-100 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
@@ -661,7 +661,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             )}
 
-            {product.productType === "RESERVATION" && (
+            {product.productType === "BOOKING" && (
               <div className="rounded-xl bg-white p-4 border border-green-100 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100">

@@ -114,7 +114,7 @@ const TYPE_VOCABULARY: Record<string, { label: string; article: string; features
     howItWorks: `Après votre achat, vous recevrez l'ensemble des éléments du pack ${"{name}"}. Chaque composant est accessible selon son type (livraison, téléchargement, accès...).`,
     testimonialText: "Rapport qualité-prix imbattable pour ce pack. Les éléments sont cohérents et complémentaires. Très satisfait de mon achat !",
   },
-  RESERVATION: {
+  BOOKING: {
     label: "réservation / événement",
     article: "une réservation",
     features: (e: (i: number, set?: keyof typeof EMOJI_SETS) => string, tc: { adjectives: string[] }) => [
