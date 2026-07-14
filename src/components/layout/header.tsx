@@ -61,15 +61,27 @@ export function Header() {
               <ChevronDown className="h-4 w-4" />
             </button>
             {produitsOpen && (
-              <div className="absolute left-0 top-full z-50 mt-2 w-48 rounded-xl border border-gray-200 bg-white py-2 shadow-lg dark:border-gray-700 dark:bg-gray-800">
-                <Link href="/products?type=physical" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+              <div className="absolute left-0 top-full z-50 mt-2 w-56 rounded-xl border border-gray-200 bg-white py-3 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">Types de produits</div>
+                <Link href="/?tab=physical" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100 text-xs">📦</span>
                   Produits Physiques
                 </Link>
-                <Link href="/products?type=digital" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/?tab=digital" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-xs">💻</span>
                   Produits Digitaux
                 </Link>
-                <Link href="/products?type=service" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/?tab=services" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 text-xs">🤝</span>
                   Services
+                </Link>
+                <Link href="/?tab=formations" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-100 text-xs">🎓</span>
+                  Formations
+                </Link>
+                <Link href="/?tab=coaching" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-100 text-xs">🎯</span>
+                  Coaching
                 </Link>
               </div>
             )}
@@ -155,14 +167,20 @@ export function Header() {
           ) : (
             <div className="flex flex-col gap-1">
               <span className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Produits</span>
-              <Link href="/products?type=physical" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
-                Produits Physiques
+              <Link href="/?tab=physical" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                📦 Produits Physiques
               </Link>
-              <Link href="/products?type=digital" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
-                Produits Digitaux
+              <Link href="/?tab=digital" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                💻 Produits Digitaux
               </Link>
-              <Link href="/products?type=service" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
-                Services
+              <Link href="/?tab=services" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                🤝 Services
+              </Link>
+              <Link href="/?tab=formations" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                🎓 Formations
+              </Link>
+              <Link href="/?tab=coaching" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                🎯 Coaching
               </Link>
               <Link href="/#features" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 Fonctionnalités

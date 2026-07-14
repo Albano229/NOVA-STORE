@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Store,
   ArrowRight,
@@ -334,6 +335,17 @@ const sellCategories = [
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("physical");
+  const searchParams = useSearchParams();
+
+  // Lire le paramètre ?tab= pour activer le bon onglet
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && ["physical", "digital", "services", "formations", "coaching"].includes(tab)) {
+      setActiveTab(tab);
+      // Scroll vers la section hero
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [searchParams]);
   const { settings } = useSiteSettings();
   const siteName = settings.siteName || BRAND.name;
   const { recentlyViewed, clearRecent } = useRecentlyViewed();
