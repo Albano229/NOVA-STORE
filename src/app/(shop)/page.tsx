@@ -483,38 +483,43 @@ export default function HomePage() {
                       </Link>
                     </div>
 
-                    {/* Mockup / Visuel */}
+                    {/* Mockup / Visuel - Dashboard réaliste */}
                     <div className="lg:col-span-2">
                       <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${tab.gradient} p-1 shadow-lg`}>
-                        <div className="rounded-xl bg-white p-6">
+                        <div className="rounded-xl bg-white p-4 sm:p-5">
                           {/* Barre type fenêtre */}
-                          <div className="mb-4 flex items-center gap-2">
-                            <div className="h-3 w-3 rounded-full bg-red-400" />
-                            <div className="h-3 w-3 rounded-full bg-yellow-400" />
-                            <div className="h-3 w-3 rounded-full bg-green-400" />
-                            <span className="ml-2 text-xs text-gray-400">aperçu {tab.label.toLowerCase()}</span>
+                          <div className="mb-3 flex items-center gap-1.5">
+                            <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-green-400" />
+                            <span className="ml-2 text-[10px] text-gray-400 font-medium">Dashboard vendeur — {tab.label}</span>
                           </div>
 
-                          {/* Contenu du mockup - DIGITAL avec sous-catégories */}
                           {tab.subcategories ? (
-                            <div className="py-2">
-                              <div className="flex flex-col items-center text-center">
-                                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${tab.gradient} shadow-inner`}>
-                                  <tab.icon className="h-8 w-8 text-white" />
-                                </div>
-                                <h4 className="mt-3 text-lg font-bold text-gray-900">{tab.label}</h4>
-                                <p className="mt-1 text-sm text-gray-500">{tab.shortDesc}</p>
+                            /* --- DIGITAL avec sous-catégories Ressources & Formations --- */
+                            <div className="space-y-4">
+                              {/* Mini stats */}
+                              <div className="grid grid-cols-3 gap-2">
+                                {[
+                                  { label: "Ventes", value: "847", color: "text-emerald-600", bg: "bg-emerald-50" },
+                                  { label: "Élèves", value: "234", color: "text-blue-600", bg: "bg-blue-50" },
+                                  { label: "Revenus", value: "12.4k€", color: "text-amber-600", bg: "bg-amber-50" },
+                                ].map((s) => (
+                                  <div key={s.label} className={`rounded-lg ${s.bg} p-2 text-center`}>
+                                    <p className="text-[10px] text-gray-500">{s.label}</p>
+                                    <p className={`text-sm font-bold ${s.color}`}>{s.value}</p>
+                                  </div>
+                                ))}
                               </div>
-                              {/* Deux sous-catégories côte à côte */}
-                              <div className="mt-5 grid grid-cols-2 gap-3">
+                              {/* Sous-catégories côte à côte */}
+                              <div className="grid grid-cols-2 gap-2">
                                 {tab.subcategories.map((sub) => (
-                                  <div key={sub.name} className="rounded-xl border border-gray-100 bg-gray-50 p-4 text-center">
-                                    <span className="text-2xl">{sub.emoji}</span>
-                                    <h5 className="mt-2 text-sm font-bold text-gray-900">{sub.name}</h5>
-                                    <p className="mt-1 text-xs text-gray-500 leading-relaxed">{sub.desc}</p>
-                                    <div className="mt-3 flex flex-wrap justify-center gap-1">
+                                  <div key={sub.name} className="rounded-lg border border-gray-100 bg-gray-50 p-3 text-center">
+                                    <span className="text-xl">{sub.emoji}</span>
+                                    <h5 className="mt-1 text-xs font-bold text-gray-900">{sub.name}</h5>
+                                    <div className="mt-1.5 flex flex-wrap justify-center gap-1">
                                       {sub.examples.slice(0, 3).map((ex) => (
-                                        <span key={ex} className="rounded-full bg-white px-2 py-0.5 text-[10px] font-medium text-gray-600 shadow-sm">{ex}</span>
+                                        <span key={ex} className="rounded-full bg-white px-1.5 py-0.5 text-[9px] font-medium text-gray-600 shadow-sm">{ex}</span>
                                       ))}
                                     </div>
                                   </div>
@@ -522,20 +527,56 @@ export default function HomePage() {
                               </div>
                             </div>
                           ) : (
-                            /* Contenu standard pour les autres types */
-                            <div className="flex flex-col items-center py-6 text-center">
-                              <div className={`flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${tab.gradient} text-3xl shadow-inner`}>
-                                <tab.icon className="h-10 w-10 text-white" />
-                              </div>
-                              <h4 className="mt-4 text-lg font-bold text-gray-900">{tab.label}</h4>
-                              <p className="mt-1 text-sm text-gray-500">{tab.shortDesc}</p>
-                              <div className="mt-4 grid w-full grid-cols-2 gap-2">
-                                {tab.features.slice(0, 4).map((f) => (
-                                  <div key={f} className="flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600">
-                                    <Check className="h-3 w-3 text-indigo-500" />
-                                    {f}
+                            /* --- DASHBOARD RÉALISTE pour les autres types --- */
+                            <div className="space-y-3">
+                              {/* Barre latérale + contenu */}
+                              <div className="flex gap-2">
+                                {/* Sidebar mini */}
+                                <div className="flex w-8 flex-col gap-1.5 rounded-lg bg-gray-100 p-1.5">
+                                  {["📊", "🛒", "💳", "👥", "⚙️"].map((icon, i) => (
+                                    <div key={i} className={`flex h-5 w-5 items-center justify-center rounded text-[10px] ${i === 1 ? "bg-white shadow-sm" : ""}`}>{icon}</div>
+                                  ))}
+                                </div>
+                                {/* Contenu principal */}
+                                <div className="flex-1 space-y-2">
+                                  {/* Stats row */}
+                                  <div className="grid grid-cols-3 gap-1.5">
+                                    {[
+                                      { label: "Ventes", value: "1,284", change: "+12%", up: true },
+                                      { label: "Visiteurs", value: "8,432", change: "+8%", up: true },
+                                      { label: "Revenu", value: "3.240€", change: "-2%", up: false },
+                                    ].map((s) => (
+                                      <div key={s.label} className="rounded-lg bg-gray-50 p-2">
+                                        <p className="text-[9px] text-gray-500">{s.label}</p>
+                                        <p className="text-sm font-bold text-gray-900">{s.value}</p>
+                                        <p className={`text-[9px] ${s.up ? "text-emerald-600" : "text-red-600"}`}>{s.change}</p>
+                                      </div>
+                                    ))}
                                   </div>
-                                ))}
+                                  {/* Mini graphique */}
+                                  <div className="flex h-12 items-end gap-1 rounded-lg bg-gray-50 px-2 py-1.5">
+                                    {[35, 55, 42, 70, 60, 85, 75, 90, 80, 65].map((h, i) => (
+                                      <div key={i} className={`flex-1 rounded-t ${i >= 7 ? "bg-indigo-500" : "bg-indigo-200"}`} style={{ height: `${h}%` }} />
+                                    ))}
+                                  </div>
+                                  {/* Produits récents */}
+                                  <div className="rounded-lg bg-gray-50 p-2">
+                                    <p className="text-[9px] font-semibold text-gray-500 mb-1">🛍️ Produits récents</p>
+                                    {[
+                                      { name: "Smartphone Pro Max", price: "450.000 F", sold: "23" },
+                                      { name: "Formation Marketing", price: "75.000 F", sold: "12" },
+                                    ].map((p) => (
+                                      <div key={p.name} className="flex items-center justify-between py-0.5">
+                                        <span className="text-[10px] text-gray-700 truncate max-w-[60%]">{p.name}</span>
+                                        <span className="text-[10px] font-medium text-gray-900">{p.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                              {/* Badge en bas */}
+                              <div className={`rounded-full bg-gradient-to-r ${tab.gradient} px-3 py-1 text-center`}>
+                                <span className="text-[10px] font-semibold text-white">✨ Gérez tout depuis votre tableau de bord</span>
                               </div>
                             </div>
                           )}
@@ -947,7 +988,102 @@ export default function HomePage() {
       </section>
       )}
 
-      {/* ═══════════════ FINAL CTA ═══════════════ */}
+      {/* ═══════════════ COMMENT ÇA MARCHE ═══════════════ */}
+      <section className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Comment ça marche ?
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
+              Créez votre boutique en 5 minutes et commencez à vendre immédiatement.
+            </p>
+          </div>
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {[
+              {
+                step: "1",
+                emoji: "📝",
+                title: "Créez votre boutique",
+                desc: "Inscrivez-vous gratuitement, personnalisez votre boutique avec nos thèmes professionnels et ajoutez vos premiers produits en quelques clics.",
+              },
+              {
+                step: "2",
+                emoji: "🚀",
+                title: "Vendez vos produits",
+                desc: "Que ce soit des produits physiques, digitaux, bundles, abonnements ou réservations — gérez tout depuis un tableau de bord unique et puissant.",
+              },
+              {
+                step: "3",
+                emoji: "💰",
+                title: "Recevez vos paiements",
+                desc: "Touchez vos revenus rapidement via Wave, Moov Money, MTN Mobile Money, carte bancaire et plus. Suivez vos finances en temps réel.",
+              },
+            ].map((item) => (
+              <div key={item.step} className="relative rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm transition-all hover:shadow-lg hover:-translate-y-1">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-2xl">
+                  {item.emoji}
+                </div>
+                <div className="absolute -top-3 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white shadow-md">
+                  {item.step}
+                </div>
+                <h3 className="mt-6 text-lg font-bold text-gray-900">{item.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-gray-500">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ FAQ ═══════════════ */}
+      <section className="border-y border-gray-100 bg-gray-50 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Questions fréquentes
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-gray-500">
+              Tout ce que vous devez savoir pour commencer.
+            </p>
+          </div>
+          <div className="mt-12 space-y-4">
+            {[
+              {
+                q: "Combien coûte la création d'une boutique ?",
+                a: "C'est totalement gratuit ! Créez votre boutique sans aucun abonnement. Vous ne payez qu'une commission de 5% uniquement lorsque vous réalisez une vente.",
+              },
+              {
+                q: "Quels moyens de paiement puis-je accepter ?",
+                a: "Vous pouvez accepter les paiements par Wave, Moov Money, MTN Mobile Money, cartes bancaires (Visa, Mastercard), PayPal et bien d'autres — le tout centralisé dans votre boutique.",
+              },
+              {
+                q: "Puis-je vendre depuis n'importe quel pays ?",
+                a: "Oui ! NOVA STORE est conçu pour les vendeurs africains et internationaux. Vous pouvez vendre partout dans le monde et recevoir vos paiements dans votre devise locale.",
+              },
+              {
+                q: "Comment fonctionne la commission de 5% ?",
+                a: "Les 5% sont prélevés uniquement sur chaque vente réussie. Pas de frais cachés, pas d'abonnement mensuel. Si vous ne vendez pas, vous ne payez rien.",
+              },
+              {
+                q: "Puis-je vendre plusieurs types de produits ?",
+                a: "Absolument ! Vous pouvez vendre des produits physiques, digitaux, bundles, abonnements communautaires et réservations — le tout depuis une seule boutique.",
+              },
+            ].map((faq) => (
+              <details key={faq.q} className="group rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md">
+                <summary className="flex cursor-pointer items-center justify-between px-6 py-4 text-sm font-semibold text-gray-900 hover:text-indigo-600">
+                  {faq.q}
+                  <svg className="h-5 w-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="border-t border-gray-100 px-6 py-4">
+                  <p className="text-sm leading-relaxed text-gray-600">{faq.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="bg-slate-900 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
