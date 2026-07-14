@@ -71,17 +71,17 @@ export function Header() {
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-xs">💻</span>
                   Produits Digitaux
                 </Link>
-                <Link href="/?tab=services" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 text-xs">🤝</span>
-                  Services
+                <Link href="/?tab=bundle" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 text-xs">🎁</span>
+                  Bundles
                 </Link>
-                <Link href="/?tab=formations" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-100 text-xs">🎓</span>
-                  Formations
+                <Link href="/?tab=community" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-100 text-xs">👥</span>
+                  Communauté
                 </Link>
-                <Link href="/?tab=coaching" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-100 text-xs">🎯</span>
-                  Coaching
+                <Link href="/?tab=booking" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-100 text-xs">📅</span>
+                  Réservation
                 </Link>
               </div>
             )}
@@ -173,14 +173,14 @@ export function Header() {
               <Link href="/?tab=digital" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 💻 Produits Digitaux
               </Link>
-              <Link href="/?tab=services" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
-                🤝 Services
+              <Link href="/?tab=bundle" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                🎁 Bundles
               </Link>
-              <Link href="/?tab=formations" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
-                🎓 Formations
+              <Link href="/?tab=community" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                👥 Communauté
               </Link>
-              <Link href="/?tab=coaching" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
-                🎯 Coaching
+              <Link href="/?tab=booking" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+                📅 Réservation
               </Link>
               <Link href="/#features" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 Fonctionnalités

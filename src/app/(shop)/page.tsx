@@ -65,7 +65,7 @@ const productTabs = [
     label: "Produits Physiques",
     icon: Package,
     shortDesc: "Vendez des produits tangibles et gérez votre stock facilement.",
-    desc: "Vendez des vêtements, électronique, accessoires et tout produit tangible directement depuis votre boutique. Gérez votre inventaire, suivez vos expéditions et offrez une expérience d'achat professionnelle à vos clients.",
+    desc: "Vendez des vêtements, électronique, accessoires et tout produit tangible directement depuis votre boutique. Gérez votre inventaire, suivez vos expéditions et offrez une expérience d'achat professionnelle à vos clients, partout dans le monde.",
     gradient: "from-indigo-500 to-purple-600",
     features: ["Gestion de stock en temps réel", "Intégration transporteurs", "Suivi des expéditions", "Étiquettes d'expédition"],
     examples: ["Vêtements", "Électronique", "Alimentation", "Maison", "Accessoires"],
@@ -75,45 +75,59 @@ const productTabs = [
     id: "digital",
     label: "Produits Digitaux",
     icon: Download,
-    shortDesc: "Vendez des fichiers numériques téléchargeables instantanément.",
-    desc: "Ebooks, templates, musique, logiciels, photos et tout fichier numérique. Livraison instantanée après paiement, aucun stock à gérer, zéro frais d'expédition, marge bénéficiaire maximale.",
+    subcategories: [
+      {
+        name: "Ressources",
+        emoji: "📄",
+        desc: "Ebooks, templates, logiciels, musiques, photos — vendez des fichiers numériques téléchargeables instantanément après paiement.",
+        examples: ["Ebooks", "Logiciels", "Templates", "Musiques", "Photos"],
+      },
+      {
+        name: "Formations",
+        emoji: "🎓",
+        desc: "Cours vidéo, masterclass, bootcamps — créez des formations complètes avec quiz, exercices et certificats automatiques.",
+        examples: ["Cours vidéo", "Masterclass", "Bootcamps", "Tutoriels", "Certifications"],
+      },
+    ],
+    shortDesc: "Ressources et formations numériques téléchargeables instantanément.",
+    desc: "Vendez des ressources numériques (ebooks, logiciels, templates) ou créez des formations en ligne complètes avec vidéos, quiz et certificats. Livraison instantanée, zéro stock, marges maximales.",
     gradient: "from-emerald-500 to-teal-600",
-    features: ["Livraison automatique", "Protection anti-piratage", "Téléchargements illimités", "Stockage cloud sécurisé"],
-    examples: ["Ebooks", "Formations vidéo", "Logiciels", "Musiques", "Templates"],
+    features: ["Livraison automatique", "Éditeur de cours vidéo", "Quiz & certificats", "Protection anti-piratage"],
+    examples: ["Ebooks", "Formations", "Logiciels", "Templates", "Musiques"],
     mockup: "💻",
   },
   {
-    id: "services",
-    label: "Services",
-    icon: Briefcase,
-    shortDesc: "Proposez vos prestations et trouvez des clients facilement.",
-    desc: "Proposez vos compétences : consulting, design, développement, rédaction, montage vidéo et bien plus. Recevez des demandes de clients, gérez vos projets et facturez directement depuis votre tableau de bord.",
+    id: "bundle",
+    label: "Bundles",
+    icon: Gift,
+    shortDesc: "Créez des packs gagnants combinant plusieurs produits.",
+    desc: "Proposez des packs combinant plusieurs produits (physique + digital, formation + coaching, etc.). Augmentez votre panier moyen et offrez plus de valeur à vos clients avec des offres groupées irrésistibles.",
     gradient: "from-amber-500 to-orange-600",
-    features: ["Système de réservation", "Facturation intégrée", "Messagerie client", "Gestion des projets"],
-    examples: ["Coaching", "Consulting", "Design", "Montage vidéo", "Développement"],
-    mockup: "🤝",
+    features: ["Packs personnalisables", "Remises automatiques", "Stock groupé", "Promotions flash"],
+    examples: ["Pack vêtements + ebook", "Formation + coaching", "Lot de produits", "Offre découverte"],
+    mockup: "🎁",
   },
   {
-    id: "formations",
-    label: "Formations",
-    icon: GraduationCap,
-    shortDesc: "Créez et vendez vos formations en ligne avec des outils complets.",
-    desc: "Créez des cours en ligne complets avec vidéos, quiz, exercices et certificats. Un système LMS (Learning Management System) intégré pour gérer vos élèves, suivre leur progression et délivrer des attestations.",
+    id: "community",
+    label: "Communauté",
+    icon: Users,
+    shortDesc: "Créez une communauté privée payante autour de votre expertise.",
+    desc: "Monétisez votre audience avec des communautés privées, groupes d'entraide, forums VIP ou abonnements exclusifs. Idéal pour les créateurs de contenu, coachs et experts qui veulent fidéliser leurs membres.",
     gradient: "from-rose-500 to-pink-600",
-    features: ["Éditeur de cours vidéo", "Quiz et exercices", "Certificats automatiques", "Suivi des apprenants"],
-    examples: ["Cours en ligne", "Formations pro", "Tutoriels vidéo", "Masterclass", "Bootcamps"],
-    mockup: "🎓",
+    features: ["Groupes privés", "Abonnements récurrents", "Messagerie intégrée", "Contenu exclusif"],
+    examples: ["Groupe VIP", "Forum privé", "Abonnement mensuel", "Club d'entraide"],
+    mockup: "👥",
   },
   {
-    id: "coaching",
-    label: "Coaching",
-    icon: Target,
-    shortDesc: "Accompagnez vos clients en séances individuelles ou en groupe.",
-    desc: "Créez vos programmes de coaching, gérez vos rendez-vous, suivez vos clients et développez votre activité de coach. Idéal pour le coaching professionnel, sportif, bien-être ou spirituel.",
+    id: "booking",
+    label: "Réservation",
+    icon: Calendar,
+    shortDesc: "Proposez des rendez-vous et services avec planning intégré.",
+    desc: "Gérez vos rendez-vous, consultations et prestations de services avec un calendrier intelligent. Vos clients réservent directement en ligne, paient à l'avance et reçoivent des rappels automatiques.",
     gradient: "from-cyan-500 to-blue-600",
-    features: ["Calendrier de réservation", "Séances en visio", "Suivi des progrès", "Paiement par séance ou forfait"],
-    examples: ["Coaching pro", "Coaching sportif", "Bien-être", "Développement", "Spirituel"],
-    mockup: "🎯",
+    features: ["Calendrier en ligne", "Paiement à la réservation", "Rappels automatiques", "Gestion des créneaux"],
+    examples: ["Consultation", "Coaching session", "Service pro", "Rendez-vous"],
+    mockup: "📅",
   },
 ];
 
@@ -275,56 +289,56 @@ const sellCategories = [
     type: "digital",
     icon: Download,
     title: "Produits Digitaux",
-    desc: "Vendez des produits numériques téléchargeables automatiquement après paiement. Aucun stock, aucune livraison physique.",
+    desc: "Ressources numériques et formations en ligne. Ebooks, logiciels, cours vidéo avec quiz et certificats intégrés.",
     gradient: "from-emerald-500 to-emerald-700",
     examples: [
       { icon: FileText, label: "Ebooks" },
-      { icon: Video, label: "Formations vidéo" },
+      { icon: Video, label: "Formations" },
       { icon: Code, label: "Logiciels" },
       { icon: Music, label: "Musiques" },
-      { icon: File, label: "Fichiers PDF" },
+      { icon: Film, label: "Templates" },
     ],
   },
   {
-    type: "service",
-    icon: Briefcase,
-    title: "Services",
-    desc: "Proposez vos compétences et recevez des demandes de clients directement via votre boutique.",
+    type: "bundle",
+    icon: Gift,
+    title: "Bundles",
+    desc: "Créez des packs combinant plusieurs produits. Augmentez votre panier moyen avec des offres groupées attractives.",
     gradient: "from-amber-500 to-amber-700",
     examples: [
-      { icon: Users, label: "Coaching" },
-      { icon: Laptop, label: "Consulting" },
-      { icon: PenTool, label: "Design" },
-      { icon: Film, label: "Montage vidéo" },
-      { icon: Code, label: "Développement" },
+      { icon: Package, label: "Packs" },
+      { icon: Star, label: "Promotions" },
+      { icon: Tag, label: "Remises" },
+      { icon: Zap, label: "Flash deals" },
+      { icon: Gift, label: "Offres" },
     ],
   },
   {
-    type: "formations",
-    icon: GraduationCap,
-    title: "Formations",
-    desc: "Créez des cours en ligne avec vidéos, quiz, exercices et certificats. Un LMS complet pour gérer vos apprenants.",
+    type: "community",
+    icon: Users,
+    title: "Communauté",
+    desc: "Créez une communauté privée payante. Abonnements récurrents, groupes VIP et contenu exclusif pour vos membres.",
     gradient: "from-rose-500 to-rose-700",
     examples: [
-      { icon: Video, label: "Cours en ligne" },
-      { icon: FileText, label: "Ebooks" },
-      { icon: Laptop, label: "Formations pro" },
-      { icon: Code, label: "Tutoriels" },
-      { icon: Award, label: "Certificats" },
+      { icon: Users, label: "Groupes VIP" },
+      { icon: MessageCircle, label: "Forums" },
+      { icon: Star, label: "Abonnements" },
+      { icon: Shield, label: "Exclusivité" },
+      { icon: Award, label: "Fidélité" },
     ],
   },
   {
-    type: "coaching",
-    icon: Target,
-    title: "Coaching",
-    desc: "Proposez des séances individuelles ou en groupe. Gérez vos rendez-vous et suivez les progrès de vos clients.",
+    type: "booking",
+    icon: Calendar,
+    title: "Réservation",
+    desc: "Proposez des rendez-vous et services avec un calendrier intelligent. Réservation en ligne et paiement à l'avance.",
     gradient: "from-cyan-500 to-cyan-700",
     examples: [
-      { icon: Users, label: "Coaching pro" },
-      { icon: Star, label: "Bien-être" },
-      { icon: Calendar, label: "Séances" },
-      { icon: MessageCircle, label: "Suivi" },
-      { icon: Clock, label: "Forfaits" },
+      { icon: Clock, label: "Rendez-vous" },
+      { icon: Calendar, label: "Planning" },
+      { icon: CreditCard, label: "Paiement" },
+      { icon: Headphones, label: "Services" },
+      { icon: Target, label: "Coaching" },
     ],
   },
 ];
@@ -340,7 +354,7 @@ export default function HomePage() {
   // Lire le paramètre ?tab= pour activer le bon onglet
   useEffect(() => {
     const tab = searchParams.get("tab");
-    if (tab && ["physical", "digital", "services", "formations", "coaching"].includes(tab)) {
+    if (tab && ["physical", "digital", "bundle", "community", "booking"].includes(tab)) {
       setActiveTab(tab);
       // Scroll vers la section hero
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -479,22 +493,51 @@ export default function HomePage() {
                             <div className="h-3 w-3 rounded-full bg-green-400" />
                             <span className="ml-2 text-xs text-gray-400">aperçu {tab.label.toLowerCase()}</span>
                           </div>
-                          {/* Contenu du mockup */}
-                          <div className="flex flex-col items-center py-6 text-center">
-                            <div className={`flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${tab.gradient} text-3xl shadow-inner`}>
-                              <tab.icon className="h-10 w-10 text-white" />
-                            </div>
-                            <h4 className="mt-4 text-lg font-bold text-gray-900">{tab.label}</h4>
-                            <p className="mt-1 text-sm text-gray-500">{tab.shortDesc}</p>
-                            <div className="mt-4 grid w-full grid-cols-2 gap-2">
-                              {tab.features.slice(0, 4).map((f) => (
-                                <div key={f} className="flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600">
-                                  <Check className="h-3 w-3 text-indigo-500" />
-                                  {f}
+
+                          {/* Contenu du mockup - DIGITAL avec sous-catégories */}
+                          {tab.subcategories ? (
+                            <div className="py-2">
+                              <div className="flex flex-col items-center text-center">
+                                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${tab.gradient} shadow-inner`}>
+                                  <tab.icon className="h-8 w-8 text-white" />
                                 </div>
-                              ))}
+                                <h4 className="mt-3 text-lg font-bold text-gray-900">{tab.label}</h4>
+                                <p className="mt-1 text-sm text-gray-500">{tab.shortDesc}</p>
+                              </div>
+                              {/* Deux sous-catégories côte à côte */}
+                              <div className="mt-5 grid grid-cols-2 gap-3">
+                                {tab.subcategories.map((sub) => (
+                                  <div key={sub.name} className="rounded-xl border border-gray-100 bg-gray-50 p-4 text-center">
+                                    <span className="text-2xl">{sub.emoji}</span>
+                                    <h5 className="mt-2 text-sm font-bold text-gray-900">{sub.name}</h5>
+                                    <p className="mt-1 text-xs text-gray-500 leading-relaxed">{sub.desc}</p>
+                                    <div className="mt-3 flex flex-wrap justify-center gap-1">
+                                      {sub.examples.slice(0, 3).map((ex) => (
+                                        <span key={ex} className="rounded-full bg-white px-2 py-0.5 text-[10px] font-medium text-gray-600 shadow-sm">{ex}</span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            /* Contenu standard pour les autres types */
+                            <div className="flex flex-col items-center py-6 text-center">
+                              <div className={`flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${tab.gradient} text-3xl shadow-inner`}>
+                                <tab.icon className="h-10 w-10 text-white" />
+                              </div>
+                              <h4 className="mt-4 text-lg font-bold text-gray-900">{tab.label}</h4>
+                              <p className="mt-1 text-sm text-gray-500">{tab.shortDesc}</p>
+                              <div className="mt-4 grid w-full grid-cols-2 gap-2">
+                                {tab.features.slice(0, 4).map((f) => (
+                                  <div key={f} className="flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600">
+                                    <Check className="h-3 w-3 text-indigo-500" />
+                                    {f}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -578,7 +621,7 @@ export default function HomePage() {
               <span className="text-indigo-600">{siteName}</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
-              Produits physiques, digitaux, services, formations et coaching — une seule plateforme pour développer
+              Produits physiques, digitaux, bundles, communauté et réservation — une seule plateforme pour développer
               votre business.
             </p>
           </div>
