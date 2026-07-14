@@ -183,59 +183,6 @@ export const CATEGORIES = {
       ],
     },
   ],
-  SERVICE: [
-    {
-      id: "consulting",
-      name: "Conseil & Consulting",
-      icon: "Lightbulb",
-      subcategories: [
-        { id: "business-consulting", name: "Stratégie business" },
-        { id: "marketing", name: "Marketing" },
-        { id: "finance", name: "Finance" },
-      ],
-    },
-    {
-      id: "development",
-      name: "Développement",
-      icon: "Code",
-      subcategories: [
-        { id: "web-dev", name: "Développement web" },
-        { id: "mobile-dev", name: "Applications mobiles" },
-        { id: "automation", name: "Automatisation" },
-      ],
-    },
-    {
-      id: "creative",
-      name: "Créatif & Design",
-      icon: "Paintbrush",
-      subcategories: [
-        { id: "graphic-design", name: "Graphisme" },
-        { id: "ui-ux", name: "UI/UX Design" },
-        { id: "video-editing", name: "Montage vidéo" },
-        { id: "copywriting", name: "Rédaction" },
-      ],
-    },
-    {
-      id: "coaching",
-      name: "Coaching & Formation",
-      icon: "GraduationCap",
-      subcategories: [
-        { id: "life-coaching", name: "Coaching de vie" },
-        { id: "business-coaching", name: "Coaching business" },
-        { id: "training", name: "Formation professionnelle" },
-      ],
-    },
-    {
-      id: "support",
-      name: "Support & Maintenance",
-      icon: "Headphones",
-      subcategories: [
-        { id: "tech-support", name: "Support technique" },
-        { id: "maintenance", name: "Maintenance" },
-        { id: "installation", name: "Installation" },
-      ],
-    },
-  ],
   COMMUNITY: [
     {
       id: "membership",
@@ -319,7 +266,7 @@ export const CATEGORIES = {
       ],
     },
   ],
-  RESERVATION: [
+  BOOKING: [
     {
       id: "events",
       name: "Événements",
@@ -628,13 +575,11 @@ export function getStepsForType(type: ProductType | null): string[] {
       return ["type", "general", "media-banner", "pricing-marketing", "logistics", "seo", "preview"]
     case "DIGITAL":
       return ["type", "general", "media-banner", "files-visuals", "pricing-marketing", "post-purchase", "seo", "preview"]
-    case "SERVICE":
-      return ["type", "general", "media-banner", "pricing-marketing", "requirements", "seo", "preview"]
     case "COMMUNITY":
       return ["type", "general", "media-banner", "pricing-marketing", "access-config", "seo", "preview"]
     case "BUNDLE":
       return ["type", "general", "media-banner", "bundle-selection", "pricing-marketing", "seo", "preview"]
-    case "RESERVATION":
+    case "BOOKING":
       return ["type", "general", "media-banner", "planning-venue", "pricing-marketing", "seo", "preview"]
     default:
       return ["type"]
