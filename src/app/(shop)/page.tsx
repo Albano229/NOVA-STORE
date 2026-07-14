@@ -39,6 +39,7 @@ import {
   Film,
   Laptop,
   Check,
+  Gift,
   Monitor,
   Settings,
   Star,
