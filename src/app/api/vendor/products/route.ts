@@ -4,14 +4,32 @@ import { authOptions } from "@/lib/auth";
 import { getAuthPool } from "@/lib/auth-pool";
 import { getVendorShop } from "@/lib/vendor-shop";
 
+function safeInt(value: unknown, fallback: number): number {
+  if (value === null || value === undefined || value === "") return fallback;
+  const n = parseInt(String(value), 10);
+  return isNaN(n) ? fallback : n;
+}
+
+function safeFloat(value: unknown, fallback: number): number {
+  if (value === null || value === undefined || value === "") return fallback;
+  const n = parseFloat(String(value));
+  return isNaN(n) ? fallback : n;
+}
+
+function safeStr(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  const s = String(value).trim();
+  return s === "" ? null : s;
+}
+
 export async function POST(req: Request) {
+  const pool = getAuthPool();
+  const client = await pool.connect();
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user || !["VENDOR","OWNER","ADMIN","MODERATOR"].includes(session.user.role)) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-
-    const pool = getAuthPool();
 
     const body = await req.json();
     const {
@@ -37,67 +55,84 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Boutique non trouvée" }, { status: 404 });
     }
 
-    const finalPrice = priceType === "free" ? 0 : parseFloat(String(price || "0"));
+    const pType = safeStr(productType) || "PHYSICAL";
+    const finalPrice = priceType === "free" ? 0 : safeFloat(price, 0);
     const productStatus = status === "draft" ? "draft" : "published";
 
     if (!name?.trim()) {
-      return NextResponse.json(
-        { error: "Le nom du produit est requis" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Le nom du produit est requis" }, { status: 400 });
     }
-
     if (!categoryId) {
-      return NextResponse.json(
-        { error: "La catégorie est requise" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "La catégorie est requise" }, { status: 400 });
     }
-
     if (!priceType) {
-      return NextResponse.json(
-        { error: "Le type de facturation est requis" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Le type de facturation est requis" }, { status: 400 });
+    }
+    if (priceType !== "free" && finalPrice <= 0) {
+      return NextResponse.json({ error: "Le prix de vente est requis pour un produit non gratuit" }, { status: 400 });
     }
 
-    if (priceType !== "free" && (!price || parseFloat(String(price)) <= 0)) {
-      return NextResponse.json(
-        { error: "Le prix de vente est requis pour un produit non gratuit" },
-        { status: 400 }
-      );
-    }
-
-    const slug = customSlug || name
+    const slug = (customSlug || name)
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-    const existingProduct = await pool.query(`SELECT "id" FROM "Product" WHERE "slug" = $1 LIMIT 1`, [slug]);
+    const existingProduct = await client.query(`SELECT "id" FROM "Product" WHERE "slug" = $1 LIMIT 1`, [slug]);
     const finalSlug = existingProduct.rows.length > 0 ? `${slug}-${Date.now()}` : slug;
 
-    const productResult = await pool.query(
+    await client.query("BEGIN");
+
+    const productResult = await client.query(
       `INSERT INTO "Product" ("id", "shopId", "name", "slug", "description", "productType", "price", "comparePrice", "discountPercent", "sku", "stock", "weight", "categoryId", "isActive", "isFeatured", "isHidden", "videoUrl", "seoTitle", "seoDescription", "seoKeywords", "brand", "dimensions", "ctaText", "ctaColor", "postPurchaseInstructions", "warranty", "returnPolicy", "status", "requiresShippingAddress", "metadata", "createdAt", "updatedAt")
        VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, NOW(), NOW())
        RETURNING *`,
       [
-        shop.id, name, finalSlug, description || null, productType || "PHYSICAL",
-        finalPrice, comparePrice ? parseFloat(String(comparePrice)) : null,
-        discountPercent ? parseFloat(String(discountPercent)) : null,
-        sku || null, parseInt(String(stock || "0")), weight ? parseFloat(String(weight)) : null,
-        categoryId || null, isActive !== false, isFeatured === true, isHidden === true,
-        videoUrl || null, seoTitle || null, seoDescription || null, seoKeywords || null,
-        brand || null, dimensions || null, ctaText || null, ctaColor || null,
-        postPurchaseInstructions || null, warranty || null, returnPolicy || null,
+        shop.id,
+        name.trim(),
+        finalSlug,
+        safeStr(description),
+        pType,
+        finalPrice,
+        comparePrice ? safeFloat(comparePrice, 0) : null,
+        discountPercent ? safeFloat(discountPercent, 0) : null,
+        safeStr(sku),
+        safeInt(stock, 0),
+        weight ? safeFloat(weight, 0) : null,
+        categoryId,
+        isActive !== false,
+        isFeatured === true,
+        isHidden === true,
+        safeStr(videoUrl),
+        safeStr(seoTitle),
+        safeStr(seoDescription),
+        safeStr(seoKeywords),
+        safeStr(brand),
+        safeStr(dimensions),
+        safeStr(ctaText),
+        safeStr(ctaColor),
+        safeStr(postPurchaseInstructions),
+        safeStr(warranty),
+        safeStr(returnPolicy),
         productStatus,
-        productType === "PHYSICAL" ? true : (requiresShippingAddress !== false),
+        pType === "PHYSICAL" ? true : (requiresShippingAddress !== false),
         JSON.stringify({
-          autoDiscount, autoDiscountType, autoDiscountValue, salesLimit,
-          countdownEnabled, countdownStartDate, countdownEndDate,
-          customButton, hideFromStore, faqItems, collectDeliveryAddress,
-          shortDescription, postPurchaseQuill, priceType, currency,
+          autoDiscount: autoDiscount ?? false,
+          autoDiscountType: autoDiscountType ?? "percentage",
+          autoDiscountValue: safeFloat(autoDiscountValue, 0),
+          salesLimit: safeInt(salesLimit, 0),
+          countdownEnabled: countdownEnabled ?? false,
+          countdownStartDate: countdownStartDate ?? null,
+          countdownEndDate: countdownEndDate ?? null,
+          customButton: customButton ?? null,
+          hideFromStore: hideFromStore ?? false,
+          faqItems: Array.isArray(faqItems) ? faqItems : [],
+          collectDeliveryAddress: collectDeliveryAddress ?? false,
+          shortDescription: shortDescription ?? null,
+          postPurchaseQuill: postPurchaseQuill ?? null,
+          priceType: priceType ?? "fixed",
+          currency: currency ?? "XOF",
         }),
       ]
     );
@@ -106,48 +141,67 @@ export async function POST(req: Request) {
     const imageArr = Array.isArray(images) ? images : [];
     for (let i = 0; i < imageArr.length; i++) {
       const img = imageArr[i];
-      const url = typeof img === "string" ? img : img.url;
-      const alt = typeof img === "string" ? "" : (img.alt || "");
-      await pool.query(
-        `INSERT INTO "ProductImage" ("id", "productId", "url", "alt", "position") VALUES (gen_random_uuid(), $1, $2, $3, $4)`,
-        [product.id, url, alt || null, i]
-      );
+      const url = typeof img === "string" ? img : img?.url;
+      const alt = typeof img === "string" ? "" : (img?.alt || "");
+      if (url) {
+        await client.query(
+          `INSERT INTO "ProductImage" ("id", "productId", "url", "alt", "position") VALUES (gen_random_uuid(), $1, $2, $3, $4)`,
+          [product.id, url, alt || null, i]
+        );
+      }
     }
 
-    if (productType === "DIGITAL") {
-      await pool.query(
+    if (pType === "DIGITAL") {
+      await client.query(
         `INSERT INTO "DigitalFile" ("id", "productId", "fileUrl", "externalUrl", "fileName", "fileSize", "fileType", "maxDownloads", "storagePath", "storageBucket")
          VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8, $9)`,
         [
-          product.id, fileUrl || externalUrl || null, externalUrl || null,
-          fileName || null, fileSize ? parseInt(String(fileSize)) : null,
-          fileType || null, maxDownloads ? parseInt(String(maxDownloads)) : null,
-          storagePath || null, storageBucket || "nova-files",
+          product.id,
+          safeStr(fileUrl) || safeStr(externalUrl),
+          safeStr(externalUrl),
+          safeStr(fileName),
+          safeInt(fileSize, 0),
+          safeStr(fileType),
+          safeInt(maxDownloads, 0),
+          safeStr(storagePath),
+          safeStr(storageBucket) || "nova-files",
         ]
       );
     }
 
-    if (productType === "PHYSICAL" || !productType) {
-      await pool.query(
+    if (pType === "PHYSICAL") {
+      const sCountries = Array.isArray(shippingCountries) ? shippingCountries : [];
+      await client.query(
         `INSERT INTO "PhysicalOption" ("id", "productId", "shippingEnabled", "shippingCost", "shippingCountries")
          VALUES (gen_random_uuid(), $1, $2, $3, $4)`,
         [
-          product.id, shippingEnabled !== false,
-          shippingCost ? parseFloat(String(shippingCost)) : null,
-          shippingCountries?.length ? JSON.stringify(shippingCountries) : null,
+          product.id,
+          shippingEnabled !== false,
+          safeFloat(shippingCost, 0),
+          sCountries.length > 0 ? JSON.stringify(sCountries) : null,
         ]
       );
     }
 
     if (Array.isArray(variants)) {
       for (const v of variants) {
-        await pool.query(
+        if (!v.name) continue;
+        await client.query(
           `INSERT INTO "ProductVariant" ("id", "productId", "name", "sku", "price", "stock", "options")
            VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6)`,
-          [product.id, v.name, v.sku || null, parseFloat(String(v.price || "0")), parseInt(String(v.stock || "0")), v.options ? JSON.stringify(v.options) : null]
+          [
+            product.id,
+            v.name,
+            safeStr(v.sku),
+            safeFloat(v.price, 0),
+            safeInt(v.stock, 0),
+            v.options ? JSON.stringify(v.options) : null,
+          ]
         );
       }
     }
+
+    await client.query("COMMIT");
 
     const fullResult = await pool.query(
       `SELECT p.*, c."name" AS "categoryName", p."requiresShippingAddress",
@@ -165,19 +219,27 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json(fullResult.rows[0], { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
+    try { await client.query("ROLLBACK"); } catch {}
     console.error("[PRODUCT_CREATE_ERROR]", {
-      message: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined,
-      name: error instanceof Error ? error.name : "Unknown",
+      message: error?.message,
+      code: error?.code,
+      detail: error?.detail,
+      constraint: error?.constraint,
+      table: error?.table,
+      column: error?.column,
     });
     return NextResponse.json(
       {
         error: "Erreur lors de la création du produit",
-        details: error instanceof Error ? error.message : "Erreur inconnue",
+        details: error?.message || "Erreur inconnue",
+        detail: error?.detail || null,
+        constraint: error?.constraint || null,
       },
       { status: 500 }
     );
+  } finally {
+    client.release();
   }
 }
 

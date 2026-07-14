@@ -475,10 +475,10 @@ export default function HomePage() {
                       </div>
 
                       <Link
-                        href="/auth/register"
-                        className={`mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${tab.gradient} px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg`}
+                        href={`/produits/${tab.id === "physical" ? "physique" : tab.id === "digital" ? "digital" : tab.id === "bundle" ? "bundle" : tab.id === "community" ? "communaute" : "reservation"}`}
+                        className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${tab.gradient} px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg`}
                       >
-                        Vendre des {tab.label.toLowerCase()}
+                        En savoir plus
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </div>

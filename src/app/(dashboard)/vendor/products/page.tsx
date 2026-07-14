@@ -33,13 +33,13 @@ interface Product {
   digitalFile?: { fileName: string } | null;
 }
 
-type FilterType = "all" | "PHYSICAL" | "DIGITAL" | "SERVICE";
+type FilterType = "all" | "PHYSICAL" | "DIGITAL" | "BOOKING";
 
 const filterOptions: { value: FilterType; label: string }[] = [
   { value: "all", label: "Tous" },
   { value: "PHYSICAL", label: "Physiques" },
   { value: "DIGITAL", label: "Digitaux" },
-  { value: "SERVICE", label: "Services" },
+  { value: "BOOKING", label: "Réservations" },
 ];
 
 const statusFilters = [

@@ -4,7 +4,6 @@ import { PRODUCT_TYPES, type WizardData, type ProductType } from "@/types/produc
 import {
   Package,
   Download,
-  Wrench,
   Users,
   Boxes,
   Calendar,
@@ -14,7 +13,6 @@ import {
 const iconMap: Record<string, React.ElementType> = {
   Package,
   Download,
-  Wrench,
   Users,
   Boxes,
   Calendar,

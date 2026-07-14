@@ -166,16 +166,27 @@
     "t4Rating": 5
   },
   "faq": {
-    "q1": "¿Cómo crear una tienda?",
-    "a1": "Haz clic en \"Crear una tienda\", elige el rol de vendedor, completa el formulario y tu tienda estará lista en minutos.",
-    "q2": "¿Cómo recibir el dinero?",
-    "a2": "Los pagos se envían directamente a tu cuenta de Stripe, PayPal o Mobile Money. Puedes solicitar un retiro en cualquier momento desde tu panel.",
-    "q3": "¿Es seguro?",
-    "a3": "¡Sí! Usamos Stripe para pagos bancarios y protocolos de seguridad de nivel bancario. Tus datos y los de tus clientes están protegidos.",
-    "q4": "¿Puedo vender desde mi teléfono?",
-    "a4": "Absolutamente. NOVA es 100% responsiva. Puedes gestionar tu tienda, agregar productos y seguir tus pedidos desde tu smartphone.",
-    "q5": "¿Cuáles son las tarifas?",
-    "a5": "NOVA cobra una comisión del 10% en cada venta. También puedes elegir un plan de suscripción para funciones avanzadas."
+    "title": "Preguntas Frecuentes",
+    "q1": {
+      "q": "¿Cómo crear una tienda?",
+      "a": "Haz clic en \"Crear una tienda\", elige el rol de vendedor, completa el formulario y tu tienda estará lista en minutos."
+    },
+    "q2": {
+      "q": "¿Cómo recibir el dinero?",
+      "a": "Los pagos se envían directamente a tu cuenta de Stripe, PayPal o Mobile Money. Puedes solicitar un retiro en cualquier momento desde tu panel."
+    },
+    "q3": {
+      "q": "¿Es seguro?",
+      "a": "¡Sí! Usamos Stripe para pagos bancarios y protocolos de seguridad de nivel bancario. Tus datos y los de tus clientes están protegidos."
+    },
+    "q4": {
+      "q": "¿Puedo vender desde mi teléfono?",
+      "a": "Absolutamente. NOVA es 100% responsiva. Puedes gestionar tu tienda, agregar productos y seguir tus pedidos desde tu smartphone."
+    },
+    "q5": {
+      "q": "¿Cuáles son las tarifas?",
+      "a": "NOVA cobra una comisión del 10% en cada venta. También puedes elegir un plan de suscripción para funciones avanzadas."
+    }
   },
   "compat": {
     "smarttv": "Smart TV",
@@ -458,5 +469,81 @@
       "seo": "SEO",
       "preview": "Vista Previa"
     }
+  },
+  "productTypes": {
+    "title": "Tipos de Productos",
+    "physical": {
+      "label": "Producto Físico",
+      "desc": "Artículos tangibles para enviar: ropa, electrónica, accesorios, libros y mucho más. Ideal para comercios minoristas y venta directa.",
+      "features": [
+        "Gestión de stock e inventario",
+        "Cálculo de costos de envío",
+        "Seguimiento de envíos",
+        "Opciones de variación (talla, color)"
+      ],
+      "shortDesc": "Artículos tangibles para enviar"
+    },
+    "digital": {
+      "label": "Producto Digital",
+      "desc": "Archivos descargables: e-books, plantillas, software, fotos, cursos online, música. Sin stock físico que gestionar.",
+      "features": [
+        "Entrega instantánea automática",
+        "Protección antipiratería",
+        "Descargas ilimitadas",
+        "Licencias y marcas de agua"
+      ],
+      "shortDesc": "Archivos descargables"
+    },
+    "bundle": {
+      "label": "Pack / Bundle",
+      "desc": "Conjunto de productos agrupados con un descuento atractivo. Aumente el valor percibido y el carrito medio de sus clientes.",
+      "features": [
+        "Descuento en el pack",
+        "Productos complementarios",
+        "Promociones cruzadas",
+        "Ofertas por tiempo limitado"
+      ],
+      "shortDesc": "Productos agrupados con descuento"
+    },
+    "community": {
+      "label": "Comunidad",
+      "desc": "Acceso a una comunidad privada, suscripciones, membresías, clubes VIP. Cree un espacio exclusivo alrededor de su marca.",
+      "features": [
+        "Miembros privados",
+        "Contenido exclusivo",
+        "Suscripciones recurrentes",
+        "Interacciones y debates"
+      ],
+      "shortDesc": "Acceso a una comunidad privada"
+    },
+    "booking": {
+      "label": "Reserva / Evento",
+      "desc": "Reserva de lugares, eventos, citas, talleres, conferencias. Gestione sus disponibilidades y calendarios fácilmente.",
+      "features": [
+        "Calendario de reservas",
+        "Pago en la reserva",
+        "Recordatorios automáticos",
+        "Gestión de plazas disponibles"
+      ],
+      "shortDesc": "Reservas y eventos"
+    }
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "step1": {
+      "title": "Cree su Cuenta",
+      "desc": "Regístrese gratis en unos clics y elija su tipo de cuenta."
+    },
+    "step2": {
+      "title": "Configure su Tienda",
+      "desc": "Añada sus productos, fije sus precios y personalice su tienda online."
+    },
+    "step3": {
+      "title": "Empiece a Vender",
+      "desc": "Comparta su tienda, reciba pedidos y gestione sus ventas fácilmente."
+    }
+  },
+  "hero": {
+    "subtitleUpdate": "Actualice su perfil e información personal"
   }
 }

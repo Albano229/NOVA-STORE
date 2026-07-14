@@ -38,6 +38,7 @@ interface ShopData {
   city: string | null;
   country: string | null;
   isVerified: boolean;
+  showPublicContact: boolean;
   createdAt: string;
   products: {
     id: string;
@@ -578,8 +579,8 @@ export default function ShopPage({
           )}
         </div>
 
-        {/* Contact Section */}
-        {(shop.phone || shop.email || shop.address) && (
+        {/* Contact Section — only if vendor opted in */}
+        {shop.showPublicContact && (shop.phone || shop.email || shop.address) && (
           <div className="mb-12 rounded-xl border border-gray-200 bg-white p-6">
             <h3 className="text-lg font-bold text-[#0f172a]">Contact</h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

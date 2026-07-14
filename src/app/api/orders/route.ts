@@ -7,6 +7,7 @@ import { withRateLimit } from "@/lib/api-rate-limit";
 
 export const POST = withRateLimit(
   async function POST(req: Request) {
+  const client = await getAuthPool().connect();
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user) {
@@ -20,10 +21,36 @@ export const POST = withRateLimit(
       return NextResponse.json({ error: "Données invalides" }, { status: 400 });
     }
 
+    if (typeof subtotal !== "number" || subtotal < 0) {
+      console.error("[ORDER_CREATE] subtotal invalide:", { subtotal, type: typeof subtotal, userId: session.user.id });
+      return NextResponse.json({ error: "Le sous-total est invalide" }, { status: 400 });
+    }
+
+    for (const item of items) {
+      if (!item.productId || !item.quantity || typeof item.price !== "number" || item.price < 0) {
+        console.error("[ORDER_CREATE] item invalide:", { item, userId: session.user.id });
+        return NextResponse.json({ error: "Un ou plusieurs articles sont invalides" }, { status: 400 });
+      }
+    }
+
     const shippingFee = 0;
     const discountAmount = discount || 0;
 
     const pool = getAuthPool();
+
+    const shopResult = await client.query(
+      `SELECT id, "commissionRate", "isActive" FROM "Shop" WHERE id = $1`,
+      [shopId]
+    );
+    if (shopResult.rows.length === 0) {
+      console.error("[ORDER_CREATE] shopId introuvable:", { shopId, userId: session.user.id });
+      return NextResponse.json({ error: "Boutique introuvable" }, { status: 404 });
+    }
+    const shop = shopResult.rows[0];
+    if (!shop.isActive) {
+      console.error("[ORDER_CREATE] shop inactive:", { shopId, userId: session.user.id });
+      return NextResponse.json({ error: "Cette boutique n'est plus active" }, { status: 400 });
+    }
 
     let tax = 0;
     try {
@@ -48,185 +75,215 @@ export const POST = withRateLimit(
       } else {
         tax = Math.round(subtotal * defaultTaxRate / 100);
       }
-    } catch {}
+    } catch (taxErr) {
+      console.error("[ORDER_CREATE] erreur calcul taxe:", taxErr);
+    }
 
     const total = subtotal + shippingFee + tax - discountAmount;
 
-    const client = await pool.connect();
+    await client.query("BEGIN");
 
-    try {
-      await client.query("BEGIN");
+    const productIds = items.map((item: any) => item.productId);
+    const variantIds = items.filter((item: any) => item.variantId).map((item: any) => item.variantId);
+    const productsResult = await client.query(
+      `SELECT id, name, stock, "productType", "shopId" FROM "Product" WHERE id = ANY($1)`,
+      [productIds]
+    );
+    const productMap = new Map(productsResult.rows.map((p) => [p.id, p]));
 
-      const productIds = items.map((item: any) => item.productId);
-      const variantIds = items.filter((item: any) => item.variantId).map((item: any) => item.variantId);
-      const productsResult = await client.query(
-        `SELECT id, name, stock, "productType" FROM "Product" WHERE id = ANY($1)`,
-        [productIds]
-      );
-      const productMap = new Map(productsResult.rows.map((p) => [p.id, p]));
-
-      let variantMap = new Map();
-      if (variantIds.length > 0) {
-        const variantsResult = await client.query(
-          `SELECT id, name, stock, "productId" FROM "ProductVariant" WHERE id = ANY($1)`,
-          [variantIds]
-        );
-        variantMap = new Map(variantsResult.rows.map((v) => [v.id, v]));
+    for (const item of items) {
+      const product = productMap.get(item.productId);
+      if (!product) {
+        await client.query("ROLLBACK");
+        console.error("[ORDER_CREATE] produit introuvable:", { productId: item.productId, shopId });
+        return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 404 });
       }
+      if (product.shopId !== shopId) {
+        await client.query("ROLLBACK");
+        console.error("[ORDER_CREATE] produit n'appartient pas à la boutique:", { productId: item.productId, productShopId: product.shopId, claimedShopId: shopId });
+        return NextResponse.json({ error: `Le produit "${product.name}" n'appartient pas à cette boutique` }, { status: 400 });
+      }
+    }
 
-      for (const item of items) {
-        const product = productMap.get(item.productId);
-        const isPhysical = product?.productType === "PHYSICAL";
+    let variantMap = new Map();
+    if (variantIds.length > 0) {
+      const variantsResult = await client.query(
+        `SELECT id, name, stock, "productId" FROM "ProductVariant" WHERE id = ANY($1)`,
+        [variantIds]
+      );
+      variantMap = new Map(variantsResult.rows.map((v) => [v.id, v]));
+    }
 
-        if (item.variantId) {
-          const variant = variantMap.get(item.variantId);
-          if (!variant) {
-            await client.query("ROLLBACK");
-            return NextResponse.json({ error: `Variante ${item.variantId} introuvable` }, { status: 404 });
-          }
-          if (isPhysical && variant.stock < item.quantity) {
-            await client.query("ROLLBACK");
-            return NextResponse.json({ error: `Stock insuffisant pour ${variant.name}` }, { status: 400 });
-          }
-        } else {
-          if (!product) {
-            await client.query("ROLLBACK");
-            return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 404 });
-          }
-          if (isPhysical && product.stock < item.quantity) {
-            await client.query("ROLLBACK");
-            return NextResponse.json({ error: `Stock insuffisant pour ${product.name}` }, { status: 400 });
-          }
+    for (const item of items) {
+      const product = productMap.get(item.productId);
+      const isPhysical = product?.productType === "PHYSICAL";
+
+      if (item.variantId) {
+        const variant = variantMap.get(item.variantId);
+        if (!variant) {
+          await client.query("ROLLBACK");
+          console.error("[ORDER_CREATE] variante introuvable:", { variantId: item.variantId, productId: item.productId });
+          return NextResponse.json({ error: `Variante ${item.variantId} introuvable` }, { status: 404 });
+        }
+        if (isPhysical && variant.stock < item.quantity) {
+          await client.query("ROLLBACK");
+          console.error("[ORDER_CREATE] stock insuffisant variante:", { variantId: item.variantId, name: variant.name, stock: variant.stock, requested: item.quantity });
+          return NextResponse.json({ error: `Stock insuffisant pour ${variant.name} (${variant.stock} disponible(s))` }, { status: 400 });
+        }
+      } else {
+        if (isPhysical && product && product.stock < item.quantity) {
+          await client.query("ROLLBACK");
+          console.error("[ORDER_CREATE] stock insuffisant produit:", { productId: item.productId, name: product.name, stock: product.stock, requested: item.quantity });
+          return NextResponse.json({ error: `Stock insuffisant pour ${product.name} (${product.stock} disponible(s))` }, { status: 400 });
         }
       }
+    }
 
-      const orderNumber = generateOrderNumber();
+    const orderNumber = generateOrderNumber();
 
-      const orderResult = await client.query(
-        `INSERT INTO "Order" ("orderNumber", "userId", "shopId", "subtotal", "shippingFee", "tax", "discount", "total", "paymentMethod", "shippingAddress", "notes")
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-         RETURNING *`,
-        [orderNumber, session.user.id, shopId, subtotal, shippingFee, tax, discountAmount, total, paymentMethod, shippingAddress ? JSON.stringify(shippingAddress) : null, notes || null]
+    const safeShippingAddress = shippingAddress && typeof shippingAddress === "object" ? shippingAddress : null;
+
+    const orderResult = await client.query(
+      `INSERT INTO "Order" ("id", "orderNumber", "userId", "shopId", "subtotal", "shippingFee", "tax", "discount", "total", "paymentMethod", "shippingAddress", "notes", "status", "paymentStatus", "createdAt", "updatedAt")
+       VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'PENDING', 'PENDING', NOW(), NOW())
+       RETURNING *`,
+      [
+        orderNumber,
+        session.user.id,
+        shopId,
+        subtotal,
+        shippingFee,
+        tax,
+        discountAmount,
+        total,
+        paymentMethod,
+        safeShippingAddress ? JSON.stringify(safeShippingAddress) : null,
+        notes || null,
+      ]
+    );
+    const order = orderResult.rows[0];
+
+    for (const item of items) {
+      const product = productMap.get(item.productId);
+      const variant = item.variantId ? variantMap.get(item.variantId) : null;
+      await client.query(
+        `INSERT INTO "OrderItem" ("id", "orderId", "productId", "variantId", "name", "price", "quantity")
+         VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6)`,
+        [order.id, item.productId, item.variantId || null, variant?.name || product?.name || item.productId, item.price, item.quantity]
       );
-      const order = orderResult.rows[0];
+    }
 
-      for (const item of items) {
-        const product = productMap.get(item.productId);
-        const variant = item.variantId ? variantMap.get(item.variantId) : null;
-        await client.query(
-          `INSERT INTO "OrderItem" ("orderId", "productId", "variantId", "name", "price", "quantity")
-           VALUES ($1, $2, $3, $4, $5, $6)`,
-          [order.id, item.productId, item.variantId || null, variant?.name || product?.name || item.productId, item.price, item.quantity]
-        );
-      }
+    for (const item of items) {
+      const product = productMap.get(item.productId);
+      const isPhysical = product?.productType === "PHYSICAL";
 
-      for (const item of items) {
-        const product = productMap.get(item.productId);
-        const isPhysical = product?.productType === "PHYSICAL";
-
-        if (isPhysical) {
-          if (item.variantId) {
-            await client.query(
-              `UPDATE "ProductVariant"
-               SET stock = stock - $1
-               WHERE id = $2`,
-              [item.quantity, item.variantId]
-            );
-          }
+      if (isPhysical) {
+        if (item.variantId) {
+          await client.query(
+            `UPDATE "ProductVariant"
+             SET stock = stock - $1
+             WHERE id = $2`,
+            [item.quantity, item.variantId]
+          );
+        } else {
           await client.query(
             `UPDATE "Product"
              SET stock = stock - $1, "soldCount" = "soldCount" + $1
              WHERE id = $2`,
             [item.quantity, item.productId]
           );
-        } else {
-          await client.query(
-            `UPDATE "Product"
-             SET "soldCount" = "soldCount" + $1
-             WHERE id = $2`,
-            [item.quantity, item.productId]
-          );
         }
+      } else {
+        await client.query(
+          `UPDATE "Product"
+           SET "soldCount" = "soldCount" + $1
+           WHERE id = $2`,
+          [item.quantity, item.productId]
+        );
       }
+    }
 
-      const shopResult = await client.query(
-        `SELECT "commissionRate" FROM "Shop" WHERE id = $1`,
+    const commissionRate = shop.commissionRate || 10;
+    const commissionAmount = (total * commissionRate) / 100;
+    await client.query(
+      `INSERT INTO "Commission" ("id", "orderId", "shopId", amount, rate, "status", "createdAt", "updatedAt")
+       VALUES (gen_random_uuid(), $1, $2, $3, $4, 'PENDING', NOW(), NOW())`,
+      [order.id, shopId, commissionAmount, commissionRate]
+    );
+
+    if (couponCode && discountAmount > 0) {
+      const couponResult = await client.query(
+        `SELECT id FROM "Coupon" WHERE code = $1 AND "isActive" = true`,
+        [couponCode.toUpperCase()]
+      );
+      if (couponResult.rows.length > 0) {
+        const couponId = couponResult.rows[0].id;
+        await client.query(
+          `INSERT INTO "CouponUsage" ("id", "couponId", "userId", "orderId", amount)
+           VALUES (gen_random_uuid(), $1, $2, $3, $4)`,
+          [couponId, session.user.id, order.id, discountAmount]
+        );
+        await client.query(
+          `UPDATE "Coupon" SET "usedCount" = "usedCount" + 1 WHERE id = $1`,
+          [couponId]
+        );
+      }
+    }
+
+    await client.query("COMMIT");
+
+    const itemsResult = await pool.query(
+      `SELECT * FROM "OrderItem" WHERE "orderId" = $1`,
+      [order.id]
+    );
+
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nova-store-ashy.vercel.app";
+
+    try {
+      const vendorUserResult = await pool.query(
+        `SELECT u.id, u.name, u.email, u.phone FROM "User" u JOIN "Shop" s ON s."userId" = u.id WHERE s.id = $1`,
         [shopId]
       );
-      if (shopResult.rows.length > 0) {
-        const commissionRate = shopResult.rows[0].commissionRate;
-        const commissionAmount = (total * commissionRate) / 100;
-        await client.query(
-          `INSERT INTO "Commission" ("orderId", "shopId", amount, rate)
-           VALUES ($1, $2, $3, $4)`,
-          [order.id, shopId, commissionAmount, commissionRate]
-        );
+      if (vendorUserResult.rows.length > 0) {
+        const vendor = vendorUserResult.rows[0];
+        await fetch(`${siteUrl}/api/notifications/send`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "NEW_ORDER_VENDOR",
+            recipientId: vendor.id,
+            recipientPhone: vendor.phone,
+            recipientEmail: vendor.email,
+            data: {
+              orderId: order.id,
+              orderNumber,
+              customerName: clientName,
+              amount: total,
+            },
+          }),
+        });
       }
-
-      if (couponCode && discountAmount > 0) {
-        const couponResult = await client.query(
-          `SELECT id FROM "Coupon" WHERE code = $1 AND "isActive" = true`,
-          [couponCode.toUpperCase()]
-        );
-        if (couponResult.rows.length > 0) {
-          const couponId = couponResult.rows[0].id;
-          await client.query(
-            `INSERT INTO "CouponUsage" ("couponId", "userId", "orderId", amount)
-             VALUES ($1, $2, $3, $4)`,
-            [couponId, session.user.id, order.id, discountAmount]
-          );
-          await client.query(
-            `UPDATE "Coupon" SET "usedCount" = "usedCount" + 1 WHERE id = $1`,
-            [couponId]
-          );
-        }
-      }
-
-      await client.query("COMMIT");
-
-      const itemsResult = await client.query(
-        `SELECT * FROM "OrderItem" WHERE "orderId" = $1`,
-        [order.id]
-      );
-
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nova-store-ashy.vercel.app";
-
-      try {
-        const vendorUserResult = await pool.query(
-          `SELECT u.id, u.name, u.email, u.phone FROM "User" u JOIN "Shop" s ON s."userId" = u.id WHERE s.id = $1`,
-          [shopId]
-        );
-        if (vendorUserResult.rows.length > 0) {
-          const vendor = vendorUserResult.rows[0];
-          await fetch(`${siteUrl}/api/notifications/send`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              type: "NEW_ORDER_VENDOR",
-              recipientId: vendor.id,
-              recipientPhone: vendor.phone,
-              recipientEmail: vendor.email,
-              data: {
-                orderId: order.id,
-                orderNumber,
-                customerName: clientName,
-                amount: total,
-              },
-            }),
-          });
-        }
-      } catch {}
-
-      return NextResponse.json({ ...order, items: itemsResult.rows });
-    } catch (txError) {
-      await client.query("ROLLBACK");
-      throw txError;
-    } finally {
-      client.release();
+    } catch (notifErr) {
+      console.error("[ORDER_CREATE] échec notification vendeur:", notifErr);
     }
-  } catch (error) {
-    console.error("Error creating order:", error);
+
+    return NextResponse.json({ ...order, items: itemsResult.rows });
+  } catch (error: any) {
+    try { await client.query("ROLLBACK"); } catch {}
+    console.error("[ORDER_CREATE] ERREUR FATALE:", {
+      message: error?.message,
+      code: error?.code,
+      detail: error?.detail,
+      constraint: error?.constraint,
+      table: error?.table,
+      column: error?.column,
+      hint: error?.hint,
+      where: error?.where,
+      stack: error?.stack,
+    });
     return NextResponse.json({ error: "Erreur lors de la création de la commande" }, { status: 500 });
+  } finally {
+    client.release();
   }
 },
   { limit: 20, window: 60_000, keyPrefix: "orders" }

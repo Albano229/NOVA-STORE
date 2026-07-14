@@ -3,6 +3,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getAuthPool } from "@/lib/auth-pool";
 
+function isFCFA(currency?: string): boolean {
+  return currency === "XOF" || currency === "XAF";
+}
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
@@ -84,6 +88,8 @@ export async function POST(req: Request) {
           });
         }
 
+        const fwCurrency = isFCFA(currency) ? "XOF" : (currency || "USD");
+
         const flutterwaveRes = await fetch("https://api.flutterwave.com/v3/payments", {
           method: "POST",
           headers: {
@@ -93,14 +99,19 @@ export async function POST(req: Request) {
           body: JSON.stringify({
             tx_ref: `nova-${orderIds[0]}-${Date.now()}`,
             amount,
-            currency: currency || "XOF",
-            redirect_url: `${siteUrl}/account/orders?success=true`,
+            currency: fwCurrency,
+            redirect_url: `${siteUrl}/api/payments/flutterwave/verify`,
+            webhook_url: `${siteUrl}/api/webhooks/flutterwave`,
             customer: {
               email: customerEmail || "",
               name: customerName || "",
               phone_number: customerPhone || "",
             },
-            meta: { orderIds },
+            meta: {
+              orderIds: orderIds.join(","),
+              userId: session.user.id,
+            },
+            payment_options: "card,mobilemoney,ussd,banktransfer,applepay,googlepay",
           }),
         });
 
@@ -109,8 +120,12 @@ export async function POST(req: Request) {
           if (data.status === "success") {
             for (const orderId of orderIds) {
               await pool.query(
-                `UPDATE "Payment" SET "transactionId" = $1 WHERE "orderId" = $2`,
-                [data.data.link, orderId]
+                `UPDATE "Payment" SET "transactionId" = $1, "metadata" = $2 WHERE "orderId" = $3`,
+                [
+                  data.data.link,
+                  JSON.stringify({ flutterwaveTxRef: data.data.tx_ref, flutterwaveLinkId: data.data.link }),
+                  orderId
+                ]
               );
             }
             return NextResponse.json({ redirectUrl: data.data.link, status: "REDIRECT" });
@@ -139,12 +154,16 @@ export async function POST(req: Request) {
             amount,
             currency: { iso: currency || "XOF" },
             description: `Commande NOVA #${orderIds[0]}`,
-            callback_url: `${siteUrl}/api/payments/webhook/fedapay`,
+            callback_url: `${siteUrl}/api/webhooks/fedapay`,
             customer: {
               email: customerEmail || "",
               lastname: customerName?.split(" ").slice(1).join(" ") || "",
               firstname: customerName?.split(" ")[0] || "",
               phone_number: customerPhone || "",
+            },
+            meta: {
+              orderIds: orderIds.join(","),
+              userId: session.user.id,
             },
           }),
         });

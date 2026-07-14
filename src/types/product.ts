@@ -1,4 +1,4 @@
-export type ProductType = "PHYSICAL" | "DIGITAL" | "SERVICE" | "COMMUNITY" | "BUNDLE" | "RESERVATION"
+export type ProductType = "PHYSICAL" | "DIGITAL" | "BUNDLE" | "COMMUNITY" | "BOOKING"
 
 export const PRODUCT_TYPES: Array<{
   type: ProductType
@@ -25,14 +25,6 @@ export const PRODUCT_TYPES: Array<{
     defaultCta: "Télécharger",
   },
   {
-    type: "SERVICE",
-    label: "Service",
-    icon: "Wrench",
-    description: "Prestations et consultations : design, développement, coaching...",
-    color: "from-emerald-500 to-emerald-600",
-    defaultCta: "Réserver",
-  },
-  {
     type: "COMMUNITY",
     label: "Communauté",
     icon: "Users",
@@ -49,8 +41,8 @@ export const PRODUCT_TYPES: Array<{
     defaultCta: "Acheter le pack",
   },
   {
-    type: "RESERVATION",
-    label: "Réservation / Événement",
+    type: "BOOKING",
+    label: "Réservation",
     icon: "Calendar",
     description: "Réservation de places, événements, rendez-vous, ateliers...",
     color: "from-amber-500 to-amber-600",
@@ -61,10 +53,9 @@ export const PRODUCT_TYPES: Array<{
 export const PRODUCT_TYPE_FIELDS: Record<ProductType, string[]> = {
   PHYSICAL: ["stock", "weight", "dimensions", "variants", "shipping", "preparationDelay", "sku", "warranty", "returnPolicy"],
   DIGITAL: ["fileUrl", "externalUrl", "maxDownloads", "version", "fileSize", "fileType", "accessDuration"],
-  SERVICE: ["duration", "availability", "locationType", "clientForm", "zone"],
-  COMMUNITY: ["isSubscription", "subscriptionPrice", "subscriptionInterval", "privateAccess", "accessType", "communityInfo"],
   BUNDLE: ["bundleProducts", "bundleDiscount", "bundleItems"],
-  RESERVATION: ["eventDate", "eventTime", "eventDuration", "eventLocation", "maxSeats", "availability"],
+  COMMUNITY: ["isSubscription", "subscriptionPrice", "subscriptionInterval", "privateAccess", "accessType", "communityInfo"],
+  BOOKING: ["eventDate", "eventTime", "eventDuration", "eventLocation", "maxSeats", "availability"],
 }
 
 export const CATEGORIES = {

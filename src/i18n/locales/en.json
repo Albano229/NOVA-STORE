@@ -166,16 +166,27 @@
     "t4Rating": 5
   },
   "faq": {
-    "q1": "How to create a shop?",
-    "a1": "Click \"Create a shop\", choose seller role, fill in the form and your shop is ready in minutes.",
-    "q2": "How to receive money?",
-    "a2": "Payments are sent directly to your Stripe, PayPal or Mobile Money account. You can request a withdrawal anytime from your dashboard.",
-    "q3": "Is it secure?",
-    "a3": "Yes! We use Stripe for bank payments and bank-level security protocols. Your data and your customers' data are protected.",
-    "q4": "Can I sell from my phone?",
-    "a4": "Absolutely. NOVA is 100% responsive. You can manage your shop, add products and track orders from your smartphone.",
-    "q5": "What are the fees?",
-    "a5": "NOVA charges a 10% commission on each sale. You can also choose a subscription plan for advanced features."
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "q": "How to create a shop?",
+      "a": "Click \"Create a shop\", choose seller role, fill in the form and your shop is ready in minutes."
+    },
+    "q2": {
+      "q": "How to receive money?",
+      "a": "Payments are sent directly to your Stripe, PayPal or Mobile Money account. You can request a withdrawal anytime from your dashboard."
+    },
+    "q3": {
+      "q": "Is it secure?",
+      "a": "Yes! We use Stripe for bank payments and bank-level security protocols. Your data and your customers' data are protected."
+    },
+    "q4": {
+      "q": "Can I sell from my phone?",
+      "a": "Absolutely. NOVA is 100% responsive. You can manage your shop, add products and track orders from your smartphone."
+    },
+    "q5": {
+      "q": "What are the fees?",
+      "a": "NOVA charges a 10% commission on each sale. You can also choose a subscription plan for advanced features."
+    }
   },
   "compat": {
     "smarttv": "Smart TV",
@@ -458,5 +469,81 @@
       "seo": "SEO",
       "preview": "Preview"
     }
+  },
+  "productTypes": {
+    "title": "Product Types",
+    "physical": {
+      "label": "Physical Product",
+      "desc": "Tangible items to ship: clothing, electronics, accessories, books and much more. Ideal for retail and direct sales.",
+      "features": [
+        "Stock and inventory management",
+        "Shipping cost calculation",
+        "Shipment tracking",
+        "Variation options (size, color)"
+      ],
+      "shortDesc": "Tangible items to ship"
+    },
+    "digital": {
+      "label": "Digital Product",
+      "desc": "Downloadable files: e-books, templates, software, photos, online courses, music. No physical stock to manage.",
+      "features": [
+        "Instant automatic delivery",
+        "Anti-piracy protection",
+        "Unlimited downloads",
+        "Licenses and watermarking"
+      ],
+      "shortDesc": "Downloadable files"
+    },
+    "bundle": {
+      "label": "Pack / Bundle",
+      "desc": "Group of products bundled with an attractive discount. Increase perceived value and average cart size of your customers.",
+      "features": [
+        "Pack discount",
+        "Complementary products",
+        "Cross promotions",
+        "Limited time offers"
+      ],
+      "shortDesc": "Bundled products with discount"
+    },
+    "community": {
+      "label": "Community",
+      "desc": "Access to a private community, subscriptions, memberships, VIP clubs. Create an exclusive space around your brand.",
+      "features": [
+        "Private members",
+        "Exclusive content",
+        "Recurring subscriptions",
+        "Interactions and discussions"
+      ],
+      "shortDesc": "Access to a private community"
+    },
+    "booking": {
+      "label": "Booking / Event",
+      "desc": "Seat reservation, events, appointments, workshops, conferences. Manage your availability and calendars easily.",
+      "features": [
+        "Booking calendar",
+        "Payment on reservation",
+        "Automatic reminders",
+        "Availability management"
+      ],
+      "shortDesc": "Reservations and events"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": {
+      "title": "Create Your Account",
+      "desc": "Sign up for free in a few clicks and choose your account type."
+    },
+    "step2": {
+      "title": "Set Up Your Shop",
+      "desc": "Add your products, set your prices and customize your online shop."
+    },
+    "step3": {
+      "title": "Start Selling",
+      "desc": "Share your shop, receive orders and manage your sales easily."
+    }
+  },
+  "hero": {
+    "subtitleUpdate": "Update your profile and personal information"
   }
 }

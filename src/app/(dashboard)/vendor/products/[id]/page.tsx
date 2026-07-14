@@ -188,19 +188,16 @@ export default function EditProductPage() {
   const handleSubmit = async (asDraft: boolean) => {
     setIsSubmitting(true)
     try {
-      const payload = {
+      const payload: Record<string, any> = {
         name: data.name,
-        shortDescription: data.shortDescription,
         description: data.description,
         categoryId: data.categoryId,
-        subcategoryId: data.subcategoryId,
         price: data.price,
-        comparePrice: data.comparePrice,
-        currency: data.currency,
+        comparePrice: data.comparePrice || null,
+        discountPercent: (data as any).discountPercent || null,
         brand: data.brand,
         sku: data.sku,
         productType: data.productType,
-        bannerUrl: data.bannerUrl,
         videoUrl: data.videoUrl,
         stock: data.stock,
         weight: data.weight,
@@ -212,6 +209,52 @@ export default function EditProductPage() {
         isActive: !asDraft,
         isFeatured: data.isFeatured,
         isHidden: data.visibility === "hidden",
+        shortDescription: data.shortDescription,
+        ctaText: data.ctaText,
+        ctaColor: data.ctaColor,
+        warranty: data.warranty,
+        returnPolicy: data.returnPolicy,
+        postPurchaseInstructions: data.postPurchaseInstructions,
+        requiresShippingAddress: data.shippingEnabled,
+        images: data.images,
+        metadata: {
+          priceType: data.priceType,
+          currency: data.currency,
+          faqItems: data.faqItems,
+          shortDescription: data.shortDescription,
+          postPurchaseQuill: data.postPurchaseQuill,
+          autoDiscount: data.autoDiscount,
+          autoDiscountType: data.autoDiscountType,
+          autoDiscountValue: data.autoDiscountValue,
+          salesLimit: data.salesLimit,
+          countdownEnabled: data.countdownEnabled,
+          countdownStartDate: data.countdownStartDate,
+          countdownEndDate: data.countdownEndDate,
+          customButton: data.customButton,
+          hideFromStore: data.hideFromStore,
+          collectDeliveryAddress: data.collectDeliveryAddress,
+        },
+      }
+
+      if (data.productType === "DIGITAL") {
+        payload.digitalFile = {
+          fileUrl: data.fileUrl,
+          externalUrl: data.externalUrl,
+          fileName: data.fileName,
+          fileSize: data.fileSize,
+          fileType: data.fileType,
+          maxDownloads: data.maxDownloads,
+          storagePath: data.storagePath,
+          storageBucket: data.storageBucket,
+        }
+      }
+
+      if (data.productType === "PHYSICAL") {
+        payload.physicalOption = {
+          shippingEnabled: data.shippingEnabled,
+          shippingCost: data.shippingCost,
+          shippingCountries: data.shippingCountries,
+        }
       }
 
       const res = await fetch(`/api/vendor/products/${productId}`, {
@@ -222,7 +265,7 @@ export default function EditProductPage() {
 
       if (!res.ok) {
         const json = await res.json()
-        throw new Error(json.error || "Erreur lors de la mise à jour")
+        throw new Error(json.error || json.details || "Erreur lors de la mise à jour")
       }
 
       toast.success("Produit mis à jour avec succès !")

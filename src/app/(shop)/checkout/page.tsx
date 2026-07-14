@@ -9,9 +9,6 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
 import {
-  CreditCard,
-  Smartphone,
-  Wallet,
   ShieldCheck,
   MapPin,
   User,
@@ -20,7 +17,6 @@ import {
   Home,
   Globe,
   ChevronDown,
-  Landmark,
   Truck,
   Info,
   Tag,
@@ -43,7 +39,7 @@ interface ClientInfo {
   notes: string;
 }
 
-type PaymentMethod = "STRIPE" | "FLUTTERWAVE" | "FEDAPAY" | "MONEYFUSION" | "PAYPAL";
+  type PaymentMethod = "STRIPE" | "MOBILE_MONEY" | "EXPRESS_PAY";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -84,13 +80,27 @@ export default function CheckoutPage() {
   const countryFields = getCountryFields(clientInfo.country);
   const selectedCountry = PHONE_CODES.find((c) => c.code === clientInfo.country);
 
-  const paymentMethods: Array<{ id: PaymentMethod; label: string; icon: typeof CreditCard; desc: string; available: boolean }> = [
-    { id: "STRIPE", label: "Carte bancaire", icon: CreditCard, desc: "Visa, Mastercard", available: true },
-    { id: "FLUTTERWAVE", label: "Mobile Money", icon: Smartphone, desc: "Wave, Orange Money, MTN", available: true },
-    { id: "FEDAPAY", label: "FedaPay", icon: Landmark, desc: "Mobile Money & Banque", available: true },
-    { id: "MONEYFUSION", label: "Money Fusion", icon: Smartphone, desc: "Wave, Orange Money, MTN, Moov", available: true },
-    { id: "PAYPAL", label: "PayPal", icon: Wallet, desc: "Paiement PayPal", available: false },
+  const isFCFA = currency.code === "XOF" || currency.code === "XAF";
+  const isInternational = !isFCFA;
+
+  const paymentMethods: Array<{ id: PaymentMethod; label: string; icon: string; desc: string; brands: string[]; available: boolean }> = [
+    { id: "MOBILE_MONEY", label: "Mobile Money", icon: "📱", desc: "Payer par mobile", brands: ["MTN", "Moov", "Wave", "Celtis", "Orange"], available: true },
+    { id: "STRIPE", label: "Carte bancaire", icon: "💳", desc: "Payer par carte", brands: ["Visa", "Mastercard", "EuroCard"], available: true },
+    { id: "EXPRESS_PAY", label: "Paiements rapides", icon: "⚡", desc: "Payer en un clic", brands: ["Apple Pay", "Google Pay"], available: isInternational },
   ];
+
+  const getApiPaymentMethod = (method: PaymentMethod): string => {
+    if (method === "MOBILE_MONEY") {
+      return isFCFA ? "MONEYFUSION" : "FLUTTERWAVE";
+    }
+    if (method === "EXPRESS_PAY") {
+      return "FLUTTERWAVE";
+    }
+    if (method === "STRIPE") {
+      return isFCFA ? "MONEYFUSION" : "FLUTTERWAVE";
+    }
+    return isFCFA ? "MONEYFUSION" : "FLUTTERWAVE";
+  };
 
   const updateClientInfo = (field: keyof ClientInfo, value: string) => {
     setClientInfo((prev) => {
@@ -165,17 +175,19 @@ export default function CheckoutPage() {
 
     setLoading(true);
     try {
+      const apiPaymentMethod = getApiPaymentMethod(paymentMethod);
+
       const shippingAddress = needsShippingAddress ? {
-        firstName: clientInfo.firstName,
-        lastName: clientInfo.lastName,
-        email: clientInfo.email,
+        firstName: clientInfo.firstName || "",
+        lastName: clientInfo.lastName || "",
+        email: clientInfo.email || "",
         phone: `${clientInfo.phoneCode}${clientInfo.phone}`,
-        address: clientInfo.address,
-        postalCode: clientInfo.postalCode,
-        city: clientInfo.city,
-        country: clientInfo.country,
-        countryName: selectedCountry?.country || clientInfo.country,
-      } : null;
+        address: clientInfo.address || "",
+        postalCode: clientInfo.postalCode || "",
+        city: clientInfo.city || "",
+        country: clientInfo.country || "BJ",
+        countryName: selectedCountry?.country || clientInfo.country || "Bénin",
+      } : { firstName: "Non applicable", lastName: "Digital", address: "Non applicable (Digital)", city: "N/A", country: "N/A", phone: `${clientInfo.phoneCode}${clientInfo.phone}`, email: clientInfo.email || "", postalCode: "", countryName: "N/A" };
 
       const orders = [];
       for (const [shopId, shopItems] of Object.entries(vendorGroups)) {
@@ -183,33 +195,36 @@ export default function CheckoutPage() {
         const shopProportion = shopSubtotal / getTotal();
         const shopDiscount = appliedCoupon ? Math.round(appliedCoupon.discount * shopProportion * 100) / 100 : 0;
 
+        const orderPayload = {
+          shopId: shopId || "",
+          paymentMethod: apiPaymentMethod,
+          currency: currency.code || "XOF",
+          items: shopItems.map((item) => ({
+            productId: item.productId || "",
+            variantId: item.variantId || null,
+            quantity: item.quantity || 1,
+            price: item.price || 0,
+          })),
+          subtotal: shopSubtotal || 0,
+          discount: shopDiscount || 0,
+          shippingAddress,
+          clientName: `${clientInfo.firstName || ""} ${clientInfo.lastName || ""}`.trim() || "Client",
+          clientEmail: clientInfo.email || "",
+          clientPhone: `${clientInfo.phoneCode}${clientInfo.phone}` || "",
+          notes: clientInfo.notes || "",
+          couponCode: appliedCoupon?.code || null,
+        };
+
         const res = await fetch("/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            shopId,
-            paymentMethod,
-            currency: currency.code,
-            items: shopItems.map((item) => ({
-              productId: item.productId,
-              variantId: item.variantId,
-              quantity: item.quantity,
-              price: item.price,
-            })),
-            subtotal: shopSubtotal,
-            discount: shopDiscount,
-            shippingAddress,
-            clientName: `${clientInfo.firstName} ${clientInfo.lastName}`,
-            clientEmail: clientInfo.email,
-            clientPhone: `${clientInfo.phoneCode}${clientInfo.phone}`,
-            notes: clientInfo.notes,
-            couponCode: appliedCoupon?.code || null,
-          }),
+          body: JSON.stringify(orderPayload),
         });
 
         if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.error || "Erreur lors de la commande");
+          const errorBody = await res.json();
+          console.error("[CHECKOUT] Erreur API [" + res.status + "]:", errorBody.error);
+          throw new Error(errorBody.error || "Erreur lors de la commande");
         }
 
         orders.push(await res.json());
@@ -220,7 +235,7 @@ export default function CheckoutPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           orderIds: orders.map((o: any) => o.id),
-          paymentMethod,
+          paymentMethod: apiPaymentMethod,
           currency: currency.code,
           amount: getDiscountedTotal(),
           couponCode: appliedCoupon?.code || null,
@@ -242,6 +257,7 @@ export default function CheckoutPage() {
       toast.success("Commande passée avec succès !");
       router.push("/account/orders");
     } catch (error: any) {
+      console.error("[CHECKOUT] Erreur:", error?.message);
       toast.error(error.message || "Erreur lors de la commande");
     } finally {
       setLoading(false);
@@ -398,25 +414,53 @@ export default function CheckoutPage() {
           {/* Payment Method */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
             <h2 className="text-lg font-semibold text-[#0f172a] dark:text-white">Mode de paiement</h2>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {paymentMethods.filter((m) => m.available).map((method) => (
-                <button
-                  key={method.id}
-                  onClick={() => setPaymentMethod(method.id)}
-                  className={cn(
-                    "flex items-center gap-3 rounded-xl border-2 p-4 text-left transition-colors",
-                    paymentMethod === method.id
-                      ? "border-[#7126b6] bg-[#f3e8ff] dark:bg-[#7126b6]/20"
-                      : "border-gray-200 hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-500"
-                  )}
-                >
-                  <method.icon className="h-5 w-5 flex-shrink-0" />
-                  <div>
-                    <span className="text-sm font-medium dark:text-white">{method.label}</span>
-                    <span className="block text-xs text-gray-500 dark:text-gray-400">{method.desc}</span>
-                  </div>
-                </button>
-              ))}
+            <div className="mt-4 space-y-3">
+              {paymentMethods.filter((m) => m.available).map((method) => {
+                const isSelected = paymentMethod === method.id;
+                return (
+                  <button
+                    key={method.id}
+                    onClick={() => setPaymentMethod(method.id)}
+                    className={cn(
+                      "w-full flex items-center gap-4 rounded-xl border-2 p-4 text-left transition-all",
+                      isSelected
+                        ? "border-[#7126b6] bg-[#f3e8ff] shadow-sm dark:bg-[#7126b6]/20"
+                        : "border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-700/50"
+                    )}
+                  >
+                    <span className="text-2xl flex-shrink-0">{method.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-[#0f172a] dark:text-white">{method.label}</span>
+                        {isSelected && <span className="h-2 w-2 rounded-full bg-[#7126b6]" />}
+                      </div>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{method.desc}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1 justify-end max-w-[140px]">
+                      {method.brands.map((brand) => (
+                        <span
+                          key={brand}
+                          className={cn(
+                            "inline-block rounded-full px-2 py-0.5 text-[10px] font-medium",
+                            brand === "Visa" && "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+                            brand === "Mastercard" && "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+                            brand === "EuroCard" && "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+                            brand === "MTN" && "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+                            brand === "Moov" && "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300",
+                            brand === "Wave" && "bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
+                            brand === "Celtis" && "bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+                            brand === "Orange" && "bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300",
+                            brand === "Apple Pay" && "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
+                            brand === "Google Pay" && "bg-gray-50 text-gray-600 dark:bg-gray-700 dark:text-gray-300",
+                          )}
+                        >
+                          {brand}
+                        </span>
+                      ))}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 

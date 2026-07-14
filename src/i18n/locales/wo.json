@@ -166,16 +166,27 @@
     "t4Rating": 5
   },
   "faq": {
-    "q1": "Naka la sos ab butik?",
-    "a1": "Klik \"Sos ab butik\", tëral njëk jënd-kat, fill formulaire bi te butik bi teew na ci waxtu yu ndaw.",
-    "q2": "Naka la ngaay xaalis?",
-    "a2": "Xaalis yi yónne nañu ko tey ci Stripe, PayPal walla Mobile Money maa. Mën nga laaj yóbbu ci kanam ci tablo maa.",
-    "q3": "Aar na?",
-    "a3": "Waaw! Ñu ngi jëfandikoo Stripe ngir xaalis bank te protocole aar yi ci niveau bank. Xaalis maa te xaalis kiliyan yi aar nañu.",
-    "q4": "Mën ma jërale dugg ci telefon?",
-    "a4": "Waaw. NOVA responsive 100% na. Mën nga saytu butik bi, yokk jumtukaay yi te tëgg jënd yi dugg ci smartphone maa.",
-    "q5": "Lu nekk frais yi?",
-    "a5": "NOVA jëna na 10% komisyon ci lépp njëg. Mën nga téral ab plan abonnement ngir fonctionnalités yu bari."
+    "title": "Laaj yi ñu gëna laaj",
+    "q1": {
+      "q": "Naka la sos ab butik?",
+      "a": "Klik \"Sos ab butik\", tëral njëk jënd-kat, fill formulaire bi te butik bi teew na ci waxtu yu ndaw."
+    },
+    "q2": {
+      "q": "Naka la ngaay xaalis?",
+      "a": "Xaalis yi yónne nañu ko tey ci Stripe, PayPal walla Mobile Money maa. Mën nga laaj yóbbu ci kanam ci tablo maa."
+    },
+    "q3": {
+      "q": "Aar na?",
+      "a": "Waaw! Ñu ngi jëfandikoo Stripe ngir xaalis bank te protocole aar yi ci niveau bank. Xaalis maa te xaalis kiliyan yi aar nañu."
+    },
+    "q4": {
+      "q": "Mën ma jërale dugg ci telefon?",
+      "a": "Waaw. NOVA responsive 100% na. Mën nga saytu butik bi, yokk jumtukaay yi te tëgg jënd yi dugg ci smartphone maa."
+    },
+    "q5": {
+      "q": "Lu nekk frais yi?",
+      "a": "NOVA jëna na 10% komisyon ci lépp njëg. Mën nga téral ab plan abonnement ngir fonctionnalités yu bari."
+    }
   },
   "compat": {
     "smarttv": "Smart TV",
@@ -458,5 +469,81 @@
       "seo": "SEO",
       "preview": "Xool"
     }
+  },
+  "productTypes": {
+    "title": "Xeeti Jumtukaay",
+    "physical": {
+      "label": "Jumtukaay bu Mat",
+      "desc": "Li mat mu mel ngir yónne: yàlla, elektronik, akseswar, tééré te lu bari. Baax ngir jënd-jëndal ci këru.",
+      "features": [
+        "Saytu stock ak inventer",
+        "Wee njëg yonne",
+        "Toppu yonne yi",
+        "Options yu soppe (nim, uuti)"
+      ],
+      "shortDesc": "Li mat mu mel ngir yónne"
+    },
+    "digital": {
+      "label": "Jumtukaay Numerik",
+      "desc": "Fijer yu yàgg: ebook, template, softwer, foto, kurs online, woy. Amul stock bu mat ngir saytu.",
+      "features": [
+        "Yonne bi ci sama",
+        "Aar ci pirat",
+        "Yàgg amul tir",
+        "Lisss ak marle ndox"
+      ],
+      "shortDesc": "Fijer yu yàgg"
+    },
+    "bundle": {
+      "label": "Pack / Bundle",
+      "desc": "Jumtukaay yu mat ak réduction bu baax. Yokk njëg gu nu ci kiliyan yi.",
+      "features": [
+        "Réduction ci pack bi",
+        "Jumtukaay yu takku",
+        "Promosyon yu soppe",
+        "Offre yu am waxtu"
+      ],
+      "shortDesc": "Jumtukaay yu mat ak réduction"
+    },
+    "community": {
+      "label": "Komyoo",
+      "desc": "Bind ci komyoo bu sutura, abone, membership, club VIP. Sos ab téye bu bari biir marque maa.",
+      "features": [
+        "Membro bu sutura",
+        "Li am solo tey",
+        "Abone yu am sunu",
+        "Jokkoo ak waxtaan"
+      ],
+      "shortDesc": "Bind ci komyoo bu sutura"
+    },
+    "booking": {
+      "label": "Reserve / Evenemaan",
+      "desc": "Reserve tur, evenemaan, rendez-vous, atelyee, conférences. Saytu disponibilite yi ak kalender yi ak yomb.",
+      "features": [
+        "Kalender reservation",
+        "Xaalis ci reservation",
+        "Fàtteliku ci sama",
+        "Saytu tur yu am ci"
+      ],
+      "shortDesc": "Reservasyon ak evenemaan"
+    }
+  },
+  "howItWorks": {
+    "title": "Naka la Doon",
+    "step1": {
+      "title": "Sos Takkal maa",
+      "desc": "Bindu ak yéene ci nim kli te tëral xeeti takkal maa."
+    },
+    "step2": {
+      "title": "Tëgg Butik bi",
+      "desc": "Yokk jumtukaay yi, tëral njëg yi te personalize butik bi ci online."
+    },
+    "step3": {
+      "title": "Tàmbalee Jërale",
+      "desc": "Sare butik bi, ngaay jënd yi te saytu njëg maa ak yomb."
+    }
+  },
+  "hero": {
+    "subtitleUpdate": "Yokk profil maa ci xam-xam personal maa"
   }
 }

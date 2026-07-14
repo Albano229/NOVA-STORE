@@ -46,7 +46,7 @@ export async function PATCH(req: Request) {
     if (!shop) return NextResponse.json({ error: "Boutique non trouvée" }, { status: 404 });
 
     const body = await req.json();
-    const { name, description, phone, email, address, city, country, logo, banner } = body;
+    const { name, description, phone, email, address, city, country, logo, banner, showPublicContact } = body;
 
     const updatedResult = await pool.query(
       `UPDATE "Shop" SET
@@ -59,6 +59,7 @@ export async function PATCH(req: Request) {
         "country" = $7,
         "logo" = $8,
         "banner" = $9,
+        "showPublicContact" = $11,
         "updatedAt" = NOW()
        WHERE "id" = $10
        RETURNING *`,
@@ -73,6 +74,7 @@ export async function PATCH(req: Request) {
         logo !== undefined ? logo : shop.logo,
         banner !== undefined ? banner : shop.banner,
         shop.id,
+        showPublicContact !== undefined ? showPublicContact : (shop.showPublicContact ?? false),
       ]
     );
 

@@ -63,23 +63,23 @@ export function Header() {
             {produitsOpen && (
               <div className="absolute left-0 top-full z-50 mt-2 w-56 rounded-xl border border-gray-200 bg-white py-3 shadow-lg dark:border-gray-700 dark:bg-gray-800">
                 <div className="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">Types de produits</div>
-                <Link href="/?tab=physical" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/produits/physique" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100 text-xs">📦</span>
                   Produits Physiques
                 </Link>
-                <Link href="/?tab=digital" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/produits/digital" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-xs">💻</span>
                   Produits Digitaux
                 </Link>
-                <Link href="/?tab=bundle" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/produits/bundle" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 text-xs">🎁</span>
                   Bundles
                 </Link>
-                <Link href="/?tab=community" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/produits/communaute" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-100 text-xs">👥</span>
                   Communauté
                 </Link>
-                <Link href="/?tab=booking" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
+                <Link href="/produits/reservation" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700" onClick={() => setProduitsOpen(false)}>
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-100 text-xs">📅</span>
                   Réservation
                 </Link>
@@ -167,19 +167,19 @@ export function Header() {
           ) : (
             <div className="flex flex-col gap-1">
               <span className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Produits</span>
-              <Link href="/?tab=physical" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+              <Link href="/produits/physique" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 📦 Produits Physiques
               </Link>
-              <Link href="/?tab=digital" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+              <Link href="/produits/digital" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 💻 Produits Digitaux
               </Link>
-              <Link href="/?tab=bundle" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+              <Link href="/produits/bundle" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 🎁 Bundles
               </Link>
-              <Link href="/?tab=community" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+              <Link href="/produits/communaute" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 👥 Communauté
               </Link>
-              <Link href="/?tab=booking" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
+              <Link href="/produits/reservation" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>
                 📅 Réservation
               </Link>
               <Link href="/#features" className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" onClick={() => setMobileOpen(false)}>

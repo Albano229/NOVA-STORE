@@ -166,16 +166,27 @@
     "t4Rating": 5
   },
   "faq": {
-    "q1": "Comment créer une boutique ?",
-    "a1": "Clique sur \"Créer une boutique\", choisis le rôle vendeur, remplis le formulaire et ta boutique est prête en quelques minutes.",
-    "q2": "Comment recevoir l'argent ?",
-    "a2": "Les paiements sont envoyés directement sur ton compte Stripe, PayPal ou Mobile Money. Tu peux demander un retrait à tout moment depuis ton dashboard.",
-    "q3": "Est-ce sécurisé ?",
-    "a3": "Oui ! Nous utilisons Stripe pour les paiements bancaires et des protocoles de sécurité de niveau bancaire. Tes données et celles de tes clients sont protégées.",
-    "q4": "Puis-je vendre depuis mon téléphone ?",
-    "a4": "Absolument. NOVA est 100% responsive. Tu peux gérer ta boutique, ajouter des produits et suivre tes commandes depuis ton smartphone.",
-    "q5": "Quels sont les frais ?",
-    "a5": "NOVA prélève une commission de 10% sur chaque vente. Tu peux aussi choisir un plan abonnement pour des fonctionnalités avancées."
+    "title": "Questions fréquentes",
+    "q1": {
+      "q": "Comment créer une boutique ?",
+      "a": "Clique sur \"Créer une boutique\", choisis le rôle vendeur, remplis le formulaire et ta boutique est prête en quelques minutes."
+    },
+    "q2": {
+      "q": "Comment recevoir l'argent ?",
+      "a": "Les paiements sont envoyés directement sur ton compte Stripe, PayPal ou Mobile Money. Tu peux demander un retrait à tout moment depuis ton dashboard."
+    },
+    "q3": {
+      "q": "Est-ce sécurisé ?",
+      "a": "Oui ! Nous utilisons Stripe pour les paiements bancaires et des protocoles de sécurité de niveau bancaire. Tes données et celles de tes clients sont protégées."
+    },
+    "q4": {
+      "q": "Puis-je vendre depuis mon téléphone ?",
+      "a": "Absolument. NOVA est 100% responsive. Tu peux gérer ta boutique, ajouter des produits et suivre tes commandes depuis ton smartphone."
+    },
+    "q5": {
+      "q": "Quels sont les frais ?",
+      "a": "NOVA prélève une commission de 10% sur chaque vente. Tu peux aussi choisir un plan abonnement pour des fonctionnalités avancées."
+    }
   },
   "compat": {
     "smarttv": "Smart TV",
@@ -458,5 +469,81 @@
       "seo": "SEO",
       "preview": "Aperçu"
     }
+  },
+  "productTypes": {
+    "title": "Types de produits",
+    "physical": {
+      "label": "Produit Physique",
+      "desc": "Articles tangibles à expédier : vêtements, électronique, accessoires, livres et bien plus encore. Idéal pour les commerces de détail et la vente directe.",
+      "features": [
+        "Gestion de stock et inventaire",
+        "Calcul des frais de livraison",
+        "Suivi des expéditions",
+        "Options de variation (taille, couleur)"
+      ],
+      "shortDesc": "Articles tangibles à expédier"
+    },
+    "digital": {
+      "label": "Produit Numérique",
+      "desc": "Fichiers téléchargeables : e-books, templates, logiciels, photos, cours en ligne, musique. Pas de stock physique à gérer.",
+      "features": [
+        "Livraison instantanée automatique",
+        "Protection anti-piratage",
+        "Téléchargements illimités",
+        "Licences et watermarking"
+      ],
+      "shortDesc": "Fichiers téléchargeables"
+    },
+    "bundle": {
+      "label": "Pack / Bundle",
+      "desc": "Ensemble de produits groupés avec une réduction attractive. Augmentez la valeur perçue et le panier moyen de vos clients.",
+      "features": [
+        "Réduction sur le pack",
+        "Produits complémentaires",
+        "Promotions croisées",
+        "Offres limitées dans le temps"
+      ],
+      "shortDesc": "Produits groupés avec réduction"
+    },
+    "community": {
+      "label": "Communauté",
+      "desc": "Accès à une communauté privée, abonnements, membreships, clubs VIP. Créez un espace d'échange exclusif autour de votre marque.",
+      "features": [
+        "Membres privés",
+        "Contenu exclusif",
+        "Abonnements récurrents",
+        "Interactions et discussions"
+      ],
+      "shortDesc": "Accès à une communauté privée"
+    },
+    "booking": {
+      "label": "Réservation / Événement",
+      "desc": "Réservation de places, événements, rendez-vous, ateliers, conférences. Gérez vos disponibilités et vos calendriers simplement.",
+      "features": [
+        "Calendrier de réservation",
+        "Paiement à la réservation",
+        "Rappels automatiques",
+        "Gestion des places disponibles"
+      ],
+      "shortDesc": "Réservation de places et événements"
+    }
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "step1": {
+      "title": "Créez votre compte",
+      "desc": "Inscrivez-vous gratuitement en quelques clics et choisissez votre type de compte."
+    },
+    "step2": {
+      "title": "Configurez votre boutique",
+      "desc": "Ajoutez vos produits, définissez vos prix et personnalisez votre boutique en ligne."
+    },
+    "step3": {
+      "title": "Commencez à vendre",
+      "desc": "Partagez votre boutique, recevez des commandes et gérez vos ventes facilement."
+    }
+  },
+  "hero": {
+    "subtitleUpdate": "Mettez à jour votre profil et vos informations personnelles"
   }
 }

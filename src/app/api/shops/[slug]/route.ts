@@ -16,7 +16,8 @@ export async function GET(
       `SELECT
         s.id, s.name, s.slug, s.description, s.logo, s.banner,
         s.phone, s.email, s.address, s.city, s.country,
-        s."isVerified", s."createdAt"
+        s."isVerified", s."createdAt",
+        COALESCE(s."showPublicContact", false) AS "showPublicContact"
       FROM "Shop" s
       WHERE s.slug = $1`,
       [slug]

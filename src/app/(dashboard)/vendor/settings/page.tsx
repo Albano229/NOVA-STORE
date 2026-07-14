@@ -42,6 +42,7 @@ interface StoreConfig {
   serviceEnabled: boolean;
   variantEnabled: boolean;
   aiDescriptions: boolean;
+  showPublicContact: boolean;
 }
 
 export default function VendorSettingsPage() {
@@ -69,16 +70,22 @@ export default function VendorSettingsPage() {
     serviceEnabled: false,
     variantEnabled: true,
     aiDescriptions: true,
+    showPublicContact: false,
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<"design" | "sections" | "marketing" | "contact" | "shipping" | "products">("design");
 
   useEffect(() => {
-    fetch("/api/vendor/store-config")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.config) setConfig((prev) => ({ ...prev, ...data.config }));
+    Promise.all([
+      fetch("/api/vendor/store-config").then((r) => r.json()).catch(() => ({})),
+      fetch("/api/vendor/shop").then((r) => r.json()).catch(() => ({})),
+    ])
+      .then(([configData, shopData]) => {
+        if (configData.config) setConfig((prev) => ({ ...prev, ...configData.config }));
+        if (shopData.showPublicContact !== undefined) {
+          setConfig((prev) => ({ ...prev, showPublicContact: shopData.showPublicContact }));
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -91,12 +98,19 @@ export default function VendorSettingsPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/vendor/store-config", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(config),
-      });
-      if (res.ok) {
+      const [configRes] = await Promise.all([
+        fetch("/api/vendor/store-config", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(config),
+        }),
+        fetch("/api/vendor/shop", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ showPublicContact: config.showPublicContact }),
+        }),
+      ]);
+      if (configRes.ok) {
         toast.success("Paramètres sauvegardés");
       } else {
         toast.error("Erreur lors de la sauvegarde");
@@ -300,6 +314,20 @@ export default function VendorSettingsPage() {
             <h2 className="text-lg font-semibold text-[#0f172a]">Réseaux & Contact</h2>
           </div>
           <div className="space-y-4">
+            <label className="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 p-4 cursor-pointer">
+              <div>
+                <span className="text-sm font-medium text-[#0f172a]">Afficher mes coordonnées de contact sur ma boutique publique</span>
+                <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                  Si désactivé, seuls le nom de la boutique et la description seront visibles
+                </p>
+              </div>
+              <div
+                onClick={() => updateConfig("showPublicContact", !config.showPublicContact)}
+                className={`relative h-6 w-11 cursor-pointer rounded-full transition-colors ${config.showPublicContact ? "bg-[#7126b6]" : "bg-gray-300"}`}
+              >
+                <div className={`absolute top-0.5 h-5 w-5 rounded-full bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-800/20 transition-transform ${config.showPublicContact ? "translate-x-5" : "translate-x-0.5"}`} />
+              </div>
+            </label>
             <Input label="WhatsApp" id="whatsapp" value={config.whatsapp} onChange={(e) => updateConfig("whatsapp", e.target.value)} placeholder="+229 52 23 63 14" />
             <Input label="Instagram" id="instagram" value={config.instagram} onChange={(e) => updateConfig("instagram", e.target.value)} placeholder="@votre_boutique" />
             <Input label="Facebook" id="facebook" value={config.facebook} onChange={(e) => updateConfig("facebook", e.target.value)} placeholder="https://facebook.com/..." />

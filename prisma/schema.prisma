@@ -116,6 +116,7 @@ model Shop {
   address         String?
   city            String?
   country         String?
+  showPublicContact Boolean   @default(false)
   storeType       String?   @default("PHYSICAL")
   commissionRate  Float     @default(10.0)
   isActive        Boolean   @default(true)

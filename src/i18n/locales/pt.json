@@ -166,16 +166,27 @@
     "t4Rating": 5
   },
   "faq": {
-    "q1": "Como criar uma loja?",
-    "a1": "Clique em \"Criar uma loja\", escolha o perfil vendedor, preencha o formulário e sua loja estará pronta em minutos.",
-    "q2": "Como receber o dinheiro?",
-    "a2": "Os pagamentos são enviados diretamente para sua conta Stripe, PayPal ou Mobile Money. Você pode solicitar um saque a qualquer momento pelo seu painel.",
-    "q3": "É seguro?",
-    "a3": "Sim! Usamos o Stripe para pagamentos bancários e protocolos de segurança de nível bancário. Seus dados e os de seus clientes estão protegidos.",
-    "q4": "Posso vender pelo celular?",
-    "a4": "Absolutamente. A NOVA é 100% responsiva. Você pode gerenciar sua loja, adicionar produtos e acompanhar pedidos pelo seu smartphone.",
-    "q5": "Quais são as taxas?",
-    "a5": "A NOVA cobra uma comissão de 10% em cada venda. Você também pode escolher um plano de assinatura para recursos avançados."
+    "title": "Perguntas Frequentes",
+    "q1": {
+      "q": "Como criar uma loja?",
+      "a": "Clique em \"Criar uma loja\", escolha o perfil vendedor, preencha o formulário e sua loja estará pronta em minutos."
+    },
+    "q2": {
+      "q": "Como receber o dinheiro?",
+      "a": "Os pagamentos são enviados diretamente para sua conta Stripe, PayPal ou Mobile Money. Você pode solicitar um saque a qualquer momento pelo seu painel."
+    },
+    "q3": {
+      "q": "É seguro?",
+      "a": "Sim! Usamos o Stripe para pagamentos bancários e protocolos de segurança de nível bancário. Seus dados e os de seus clientes estão protegidos."
+    },
+    "q4": {
+      "q": "Posso vender pelo celular?",
+      "a": "Absolutamente. A NOVA é 100% responsiva. Você pode gerenciar sua loja, adicionar produtos e acompanhar pedidos pelo seu smartphone."
+    },
+    "q5": {
+      "q": "Quais são as taxas?",
+      "a": "A NOVA cobra uma comissão de 10% em cada venda. Você também pode escolher um plano de assinatura para recursos avançados."
+    }
   },
   "compat": {
     "smarttv": "Smart TV",
@@ -458,5 +469,81 @@
       "seo": "SEO",
       "preview": "Pré-visualização"
     }
+  },
+  "productTypes": {
+    "title": "Tipos de Produtos",
+    "physical": {
+      "label": "Produto Físico",
+      "desc": "Itens tangíveis para enviar: roupas, eletrônicos, acessórios, livros e muito mais. Ideal para comércio varejista e venda direta.",
+      "features": [
+        "Gestão de stock e inventário",
+        "Cálculo de custos de envio",
+        "Acompanhamento de envios",
+        "Opções de variação (tamanho, cor)"
+      ],
+      "shortDesc": "Itens tangíveis para enviar"
+    },
+    "digital": {
+      "label": "Produto Digital",
+      "desc": "Arquivos para baixar: e-books, templates, software, fotos, cursos online, música. Sem stock físico para gerir.",
+      "features": [
+        "Entrega instantânea automática",
+        "Proteção antipirataria",
+        "Downloads ilimitados",
+        "Licenças e marcas d'água"
+      ],
+      "shortDesc": "Arquivos para baixar"
+    },
+    "bundle": {
+      "label": "Pack / Bundle",
+      "desc": "Conjunto de produtos agrupados com um desconto atraente. Aumente o valor percebido e o carrinho médio dos seus clientes.",
+      "features": [
+        "Desconto no pack",
+        "Produtos complementares",
+        "Promoções cruzadas",
+        "Ofertas por tempo limitado"
+      ],
+      "shortDesc": "Produtos agrupados com desconto"
+    },
+    "community": {
+      "label": "Comunidade",
+      "desc": "Acesso a uma comunidade privada, assinaturas, associações, clubes VIP. Crie um espaço exclusivo em torno da sua marca.",
+      "features": [
+        "Membros privados",
+        "Conteúdo exclusivo",
+        "Assinaturas recorrentes",
+        "Interações e discussões"
+      ],
+      "shortDesc": "Acesso a uma comunidade privada"
+    },
+    "booking": {
+      "label": "Reserva / Evento",
+      "desc": "Reserva de lugares, eventos, consultas, workshops, conferências. Gerencie suas disponibilidades e calendários facilmente.",
+      "features": [
+        "Calendário de reservas",
+        "Pagamento na reserva",
+        "Lembretes automáticos",
+        "Gestão de vagas disponíveis"
+      ],
+      "shortDesc": "Reservas e eventos"
+    }
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "step1": {
+      "title": "Crie sua Conta",
+      "desc": "Cadastre-se grátis em alguns cliques e escolha seu tipo de conta."
+    },
+    "step2": {
+      "title": "Configure sua Loja",
+      "desc": "Adicione seus produtos, defina seus preços e personalize sua loja online."
+    },
+    "step3": {
+      "title": "Comece a Vender",
+      "desc": "Compartilhe sua loja, receba pedidos e gerencie suas vendas facilmente."
+    }
+  },
+  "hero": {
+    "subtitleUpdate": "Atualize seu perfil e informações pessoais"
   }
 }
