@@ -250,7 +250,9 @@ export default function CheckoutPage() {
       clearCart();
 
       if (paymentData.redirectUrl) {
-        window.location.href = paymentData.redirectUrl;
+        if (typeof window !== "undefined") {
+          window.location.href = paymentData.redirectUrl;
+        }
         return;
       }
 

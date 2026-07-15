@@ -118,7 +118,7 @@ model Shop {
   country         String?
   showPublicContact Boolean   @default(false)
   storeType       String?   @default("PHYSICAL")
-  commissionRate  Float     @default(10.0)
+  commissionRate  Float     @default(5.0)
   isActive        Boolean   @default(true)
   isVerified      Boolean   @default(false)
   createdAt       DateTime  @default(now())
