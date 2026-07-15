@@ -135,6 +135,7 @@ const typeOptions = [
   { value: "ALL", label: "Tous les types" },
   { value: "PHYSICAL", label: "Physique" },
   { value: "DIGITAL", label: "Digital" },
+  { value: "SERVICE", label: "Service" },
   { value: "BOOKING", label: "Booking" },
   { value: "BUNDLE", label: "Bundle" },
 ];

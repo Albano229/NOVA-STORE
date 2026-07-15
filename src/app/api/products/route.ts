@@ -41,7 +41,7 @@ export async function GET(req: Request) {
       const typeMap: Record<string, string> = {
         physical: "PHYSICAL",
         digital: "DIGITAL",
-        service: "BOOKING",
+        service: "SERVICE",
         subscription: "SUBSCRIPTION",
         bundle: "BUNDLE",
       };

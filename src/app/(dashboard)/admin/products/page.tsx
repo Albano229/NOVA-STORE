@@ -323,6 +323,7 @@ export default function AdminProductsPage() {
             <option value="">Tous les types</option>
             <option value="PHYSICAL">Physique</option>
             <option value="DIGITAL">Digital</option>
+            <option value="SERVICE">Service</option>
             <option value="BOOKING">Booking</option>
             <option value="BUNDLE">Bundle</option>
             <option value="COMMUNITY">Communauté</option>

@@ -189,6 +189,7 @@ export const CATEGORIES = {
         { id: "fonts", name: "Polices" },
         { id: "icons", name: "Icônes" },
         { id: "3d-models", name: "Modèles 3D" },
+      ],
     },
   ],
   SERVICE: [

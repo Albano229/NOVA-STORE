@@ -58,6 +58,7 @@ const STEP_LABELS = [
 const STORE_TYPE_OPTIONS = [
   { id: "PHYSICAL", label: "Produits physiques", desc: "Vêtements, appareils, accessoires, alimentation", icon: Package },
   { id: "DIGITAL", label: "Produits digitaux", desc: "Ebooks, formations, logiciels, fichiers numériques", icon: Smartphone },
+  { id: "SERVICE", label: "Services", desc: "Services professionnels, prestations, consulting", icon: Wrench },
   { id: "BOOKING", label: "Réservations / événements", desc: "Réservation de salles, événements, rendez-vous", icon: Calendar },
   { id: "OTHER", label: "Autre", desc: "Autre type de produit ou service", icon: HelpCircle },
 ];

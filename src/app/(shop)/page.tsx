@@ -43,6 +43,8 @@ import {
   Gift,
   Monitor,
   Settings,
+  Paintbrush,
+  Heart,
   Star,
   Award,
   Clock,
@@ -56,6 +58,7 @@ import { useSiteSettings } from "@/contexts/site-settings-context";
 import { BRAND } from "@/lib/brand";
 import { useRecentlyViewed } from "@/hooks/use-recently-viewed";
 import { formatPrice } from "@/lib/utils";
+import { ScrollAnimator } from "@/components/ui/scroll-animator";
 
 /* ────────────────────────────────────────────
    DATA
@@ -398,6 +401,8 @@ export default function HomePage() {
   const showSection = (key: string) => settings[key] !== "false";
 
   return (
+    <>
+      <ScrollAnimator />
     <div className="overflow-hidden">
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative bg-white pb-16 pt-20 sm:pb-24 sm:pt-28">
@@ -1130,6 +1135,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

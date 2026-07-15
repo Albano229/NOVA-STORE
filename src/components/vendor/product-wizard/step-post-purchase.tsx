@@ -88,7 +88,7 @@ export default function StepPostPurchase({ data, onChange, productType }: StepPo
         </div>
       </div>
 
-      {productType === "BOOKING" && (
+      {productType === "SERVICE" && (
         <div className="space-y-4">
           <div className="rounded-xl border border-gray-200 p-5">
             <h4 className="text-sm font-medium text-[#0f172a]">Questionnaire obligatoire post-achat</h4>

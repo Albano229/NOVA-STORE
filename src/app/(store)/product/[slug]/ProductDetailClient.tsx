@@ -633,7 +633,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             )}
 
-            {product.productType === "BOOKING" && (
+            {product.productType === "SERVICE" && (
               <div className="rounded-xl bg-white p-4 border border-green-100 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
@@ -661,7 +661,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             )}
 
-            {product.productType === "BOOKING" && (
+            {product.productType === "SERVICE" && (
               <div className="rounded-xl bg-white p-4 border border-green-100 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100">

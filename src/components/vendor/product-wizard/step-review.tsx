@@ -148,7 +148,7 @@ export default function StepReview({ data }: Props) {
                 <Field label="Durée d'accès" value={data.accessDuration} />
               </>
             )}
-            {data.productType === "BOOKING" && (
+            {data.productType === "SERVICE" && (
               <>
                 <Field label="Durée" value={data.duration} />
                 <Field label="Mode" value={data.locationType === "online" ? "En ligne" : data.locationType === "offline" ? "Présentiel" : "Les deux"} />
@@ -167,7 +167,7 @@ export default function StepReview({ data }: Props) {
                 <Field label="Éléments" value={data.bundleItems.length} />
               </>
             )}
-            {data.productType === "BOOKING" && (
+            {data.productType === "SERVICE" && (
               <>
                 <Field label="Date" value={data.eventDate} />
                 <Field label="Heure" value={data.eventTime} />

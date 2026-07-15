@@ -151,7 +151,7 @@ export async function POST(req: Request) {
       const existingSlug = await pool.query(`SELECT id FROM "Product" WHERE "slug" = $1`, [slug]);
       const finalSlug = existingSlug.rows.length > 0 ? `${slug}-${Date.now()}` : slug;
 
-      const productType = ["PHYSICAL", "DIGITAL", "BUNDLE", "COMMUNITY", "BOOKING"].includes(values.productType?.toUpperCase())
+      const productType = ["PHYSICAL", "DIGITAL", "SERVICE", "BUNDLE", "COMMUNITY", "BOOKING"].includes(values.productType?.toUpperCase())
         ? values.productType.toUpperCase()
         : "PHYSICAL";
 
